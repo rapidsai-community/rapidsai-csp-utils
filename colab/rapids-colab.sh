@@ -98,8 +98,8 @@ if [ ! -f Miniconda3-4.5.4-Linux-x86_64.sh ]; then
                 python=3.6 cudatoolkit=10.0 \
                 cudf=$RAPIDS_VERSION cuml cugraph gcsfs pynvml cuspatial xgboost\
                 dask-cudf
-        # check to make sure that pyarrow is running the right version (0.15) for v0.11 or later
-        wget -nc https://github.com/rapidsai/rapidsai-csp-utils/raw/master/colab/update_pyarrow.py
+        # check to make sure that pyarrow and cffi are running the right version (0.15) for v0.11 or later
+        wget -nc https://github.com/rapidsai/rapidsai-csp-utils/raw/master/colab/update_modules.py
     else #Stable packages requiring PyArrow 0.15
         echo "Installing RAPIDS $RAPIDS_VERSION packages from the stable release channel"
         echo "Please standby, this will take a few minutes..."
@@ -109,8 +109,8 @@ if [ ! -f Miniconda3-4.5.4-Linux-x86_64.sh ]; then
             python=3.6 cudatoolkit=10.0 \
             cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost\
             dask-cudf
-        # check to make sure that pyarrow is running the right version (0.15) for v0.11 or later
-        wget -nc https://github.com/rapidsai/rapidsai-csp-utils/raw/master/colab/update_pyarrow.py
+        # check to make sure that pyarrow and cffi are running the right version (0.15) for v0.11 or later
+        wget -nc https://github.com/rapidsai/rapidsai-csp-utils/raw/master/colab/update_modules.py
     fi
       
     echo "Copying shared object files to /usr/lib"
