@@ -38,14 +38,13 @@ if (( $RAPIDS_RESULT >= 11 )) ;then
   echo "Please COMPARE the \"SCRIPT TO COPY\" with the code in the above cell.  If they are the same, just type any key.  If not, do steps 2-4. "
   echo " "
   echo "SCRIPT TO COPY: "
-  echo "!wget -nc https://raw.githubusercontent.com/rapidsai/rapidsai-csp-utils/master/colab/rapids-colab.sh"
-  echo "!bash rapids-colab.sh"
+  echo "!git clone https://github.com/rapidsai/rapidsai-csp-utils.git"
+  echo "!bash rapidsai-csp-utils/colab/rapids-colab.sh"
   echo "import sys, os"
-  echo "dist_package_index = sys.path.index\('/usr/local/lib/python3.6/dist-packages'\)"
+  echo "dist_package_index = sys.path.index('/usr/local/lib/python3.6/dist-packages')"
   echo "sys.path = sys.path[:dist_package_index] + ['/usr/local/lib/python3.6/site-packages'] + sys.path[dist_package_index:]"
   echo "sys.path"
-  echo "if os.path.exists\('update_pyarrow.py'\):"
-  echo "  exec\(open\('update_pyarrow.py'\).read\(\), globals\(\)\)"
+  echo "exec(open('rapidsai-csp-utils/colab/update_modules.py').read(), globals())"
   echo "********************************************************************************************************"
   echo "Do you have the above version of the script running in your cell? (Y/N)"
   read response
@@ -58,25 +57,25 @@ if (( $RAPIDS_RESULT >= 11 )) ;then
     echo "3. RERUN the cell"
     echo " "
     echo "SCRIPT TO COPY:"
-    echo "!wget -nc https://raw.githubusercontent.com/rapidsai/rapidsai-csp-utils/master/colab/rapids-colab.sh"
-    echo "!bash rapids-colab.sh"
+    echo "!git clone https://github.com/rapidsai/rapidsai-csp-utils.git"
+    echo "!bash rapidsai-csp-utils/colab/rapids-colab.sh"
     echo "import sys, os"
-    echo "dist_package_index = sys.path.index\('/usr/local/lib/python3.6/dist-packages'\)"
+    echo "dist_package_index = sys.path.index('/usr/local/lib/python3.6/dist-packages')"
     echo "sys.path = sys.path[:dist_package_index] + ['/usr/local/lib/python3.6/site-packages'] + sys.path[dist_package_index:]"
     echo "sys.path"
-    echo "if os.path.exists\('update_pyarrow.py'\):"
-    echo "  exec\(open\('update_pyarrow.py'\).read\(\), globals\(\)\)"
+    echo "exec(open('rapidsai-csp-utils/colab/update_modules.py').read(), globals())"
     echo "********************************************************************************************************"
     echo "Please COPY the above code and RERUN the cell"
     exit 0
+  else
+    echo "please "
   fi
 else
   echo "You may not have to change anything.  All versions of our script should work with this version of Colab"
 fi
 
-wget -nc https://github.com/rapidsai/rapidsai-csp-utils/raw/master/colab/env-check.py
 echo "Checking for GPU type:"
-python env-check.py
+python rapidsai-csp-utils/colab/env-check.py
 
 if [ ! -f Miniconda3-4.5.4-Linux-x86_64.sh ]; then
     echo "Removing conflicting packages, will replace with RAPIDS compatible versions"
@@ -98,8 +97,6 @@ if [ ! -f Miniconda3-4.5.4-Linux-x86_64.sh ]; then
                 python=3.6 cudatoolkit=10.0 \
                 cudf=$RAPIDS_VERSION cuml cugraph gcsfs pynvml cuspatial xgboost\
                 dask-cudf
-        # check to make sure that pyarrow and cffi are running the right version (0.15) for v0.11 or later
-        wget -nc https://github.com/rapidsai/rapidsai-csp-utils/raw/master/colab/update_modules.py
     else #Stable packages requiring PyArrow 0.15
         echo "Installing RAPIDS $RAPIDS_VERSION packages from the stable release channel"
         echo "Please standby, this will take a few minutes..."
@@ -109,8 +106,6 @@ if [ ! -f Miniconda3-4.5.4-Linux-x86_64.sh ]; then
             python=3.6 cudatoolkit=10.0 \
             cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost\
             dask-cudf
-        # check to make sure that pyarrow and cffi are running the right version (0.15) for v0.11 or later
-        wget -nc https://github.com/rapidsai/rapidsai-csp-utils/raw/master/colab/update_modules.py
     fi
       
     echo "Copying shared object files to /usr/lib"
@@ -121,6 +116,6 @@ if [ ! -f Miniconda3-4.5.4-Linux-x86_64.sh ]; then
 fi
 
 echo ""
-echo "*********************************************"
-echo "Your Google Colab instance is RAPIDS ready!"
-echo "*********************************************"
+echo "************************************************"
+echo "Your Google Colab instance has RAPIDS installed!"
+echo "************************************************"
