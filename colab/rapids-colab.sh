@@ -13,10 +13,11 @@ echo "Not all Colab notebooks are updated (like personal Colabs) and/or are usin
 echo "so we HIGHLY encourage users to update their scripts and Colab notebooks both with the new link AND with "
 echo "to the new API.  Otherwise, your code MAY BREAK"
 echo " "
+echo "This notice will disappear/be updated on our next release."
+echo " "
 echo "Please enter in the box your desired RAPIDS version (ex: '0.11' or '0.12', between 0.11 to 0.13, without the quotes)"
 echo "and hit Enter. If you need stability, use 0.12. If you want bleeding edge, use our nightlies (0.13), but things can break."
-echo " "
-echo "This notice will disappear/be updated on our next release."
+
 read RAPIDS_VERSION
 MULT="100"
 
@@ -66,7 +67,6 @@ if (( $RAPIDS_RESULT >= 11 )) ;then
     echo "if os.path.exists\('update_pyarrow.py'\):"
     echo "  exec\(open\('update_pyarrow.py'\).read\(\), globals\(\)\)"
     echo "********************************************************************************************************"
-    rm rc2.sh
     echo "Please COPY the above code and RERUN the cell"
     exit 0
   fi
