@@ -3,7 +3,7 @@ import sys
 import os
 
 print('***********************************************************************')
-print('Let us check on that pyarrow version...')
+print('Let us check on those pyarrow and cffi versions...')
 print('***********************************************************************')
 print()
 
@@ -22,3 +22,19 @@ if(f == None):
 
 else: 
   print(f"You're running pyarrow {pyarrow_version} and are good to go!")
+
+  
+cffi_version = sys.modules['cffi'].__version__
+f = re.search("1.13.+", cffi_version)
+if f == None:
+  for key in list(sys.modules.keys()):
+    if key.startswith('cffi'):
+      del sys.modules[key]
+  print(f"unloaded cffi {cffi_version}")
+  import cffi
+  cffi_version = sys.modules['cffi'].__version__
+  print(f"loaded cffi {cffi_version}")
+  del(cffi_version)
+
+else: 
+  print(f"cffi {cffi_version} is good to go!")
