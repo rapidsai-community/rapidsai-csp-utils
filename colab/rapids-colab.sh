@@ -67,8 +67,6 @@ if (( $RAPIDS_RESULT >= 11 )) ;then
     echo "********************************************************************************************************"
     echo "Please COPY the above code and RERUN the cell"
     exit 0
-  else
-    echo "please "
   fi
 else
   echo "You may not have to change anything.  All versions of our script should work with this version of Colab"
