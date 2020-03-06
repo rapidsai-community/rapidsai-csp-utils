@@ -46,7 +46,9 @@ if (( $RAPIDS_RESULT >= 11 )) ;then
   echo "sys.path"
   echo "exec(open('rapidsai-csp-utils/colab/update_modules.py').read(), globals())"
   echo "********************************************************************************************************"
-  echo "Do you have the above version of the script running in your cell? (Y/N)"
+  echo "Do you have the above version of the script running in your cell? (Y/N).  "
+  echo "Please note: If you do not positively affirm with 'Y' or 'y', the script show you have to rectify that issue and then stop the RAPIDS install,"
+  echo "without installing RAPIDS, but will still continue update some packages"
   read response
   if [ $response == "Y" ] || [ $response == "y" ] ;then
     echo "Continuing with RAPIDS install"
