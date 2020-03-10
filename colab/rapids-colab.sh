@@ -88,6 +88,9 @@ if [ ! -f Miniconda3-4.5.4-Linux-x86_64.sh ]; then
     chmod +x Miniconda3-4.5.4-Linux-x86_64.sh
     bash ./Miniconda3-4.5.4-Linux-x86_64.sh -b -f -p /usr/local
     
+    #Installing another conda package first something first seems to fix https://github.com/rapidsai/rapidsai-csp-utils/issues/4
+    conda install -y --prefix /usr/local -c conda-forge openssl python=3.6
+    
     if (( $RAPIDS_RESULT == 13 )) ;then #Newest nightly packages.  UPDATE EACH RELEASE!
     echo "Installing RAPIDS $RAPIDS_VERSION packages from the nightly release channel"
     echo "Please standby, this will take a few minutes..."
