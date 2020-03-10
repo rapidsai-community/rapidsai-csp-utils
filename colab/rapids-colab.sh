@@ -46,7 +46,9 @@ if (( $RAPIDS_RESULT >= 11 )) ;then
   echo "sys.path"
   echo "exec(open('rapidsai-csp-utils/colab/update_modules.py').read(), globals())"
   echo "********************************************************************************************************"
-  echo "Do you have the above version of the script running in your cell? (Y/N)"
+  echo "Do you have the above version of the script running in your cell? (Y/N).  "
+  echo "Please note: If you do not positively affirm with 'Y' or 'y', the script show you have to rectify that issue and then stop the RAPIDS install,"
+  echo "without installing RAPIDS, but will still continue update some packages"
   read response
   if [ $response == "Y" ] || [ $response == "y" ] ;then
     echo "Continuing with RAPIDS install"
@@ -85,6 +87,9 @@ if [ ! -f Miniconda3-4.5.4-Linux-x86_64.sh ]; then
     wget https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh
     chmod +x Miniconda3-4.5.4-Linux-x86_64.sh
     bash ./Miniconda3-4.5.4-Linux-x86_64.sh -b -f -p /usr/local
+    
+    #Installing another conda package first something first seems to fix https://github.com/rapidsai/rapidsai-csp-utils/issues/4
+    conda install -y --prefix /usr/local -c conda-forge openssl python=3.6
     
     if (( $RAPIDS_RESULT == 13 )) ;then #Newest nightly packages.  UPDATE EACH RELEASE!
     echo "Installing RAPIDS $RAPIDS_VERSION packages from the nightly release channel"
