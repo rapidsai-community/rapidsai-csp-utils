@@ -116,6 +116,8 @@ if [ ! -f Miniconda3-4.5.4-Linux-x86_64.sh ]; then
     cp /usr/local/lib/libcudf.so /usr/lib/libcudf.so
     cp /usr/local/lib/librmm.so /usr/lib/librmm.so
     cp /usr/local/lib/libnccl.so /usr/lib/libnccl.so
+    echo "Copying RAPIDS compatible xgboost"
+    cp /usr/local/lib/libxgboost.so /usr/lib/libxgboost.so
 fi
 
 echo ""
