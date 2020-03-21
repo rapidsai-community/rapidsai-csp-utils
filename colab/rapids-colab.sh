@@ -105,9 +105,9 @@ if [ ! -f Miniconda3-4.5.4-Linux-x86_64.sh ]; then
         echo "Please standby, this will take a few minutes..."
         # install RAPIDS packages
         conda install -y --prefix /usr/local \
-            -c rapidsai/label/xgboost -c rapidsai -c nvidia -c conda-forge \
+            -c rapidsai/label/main -c rapidsai -c nvidia -c conda-forge -c defaults\
             python=3.6 cudatoolkit=10.0 \
-            cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost\
+            cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost=1.0.0dev.rapidsai$RAPIDS_VERSION\
             dask-cudf
     fi
       
