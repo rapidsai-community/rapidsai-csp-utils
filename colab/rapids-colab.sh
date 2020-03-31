@@ -1,9 +1,12 @@
 #!/bin/bash
 
 MULT="100"
-NIGHTLIES=13
-STABLE=12
+NIGHTLIES=14
+STABLE=13
 LOWEST=11
+
+RAPIDS_VERSION="0.$STABLE"
+RAPIDS_RESULT=$STABLE
  
 echo "PLEASE READ"
 echo "********************************************************************************************************"
@@ -42,8 +45,17 @@ install_RAPIDS () {
             conda install -y --prefix /usr/local \
                     -c rapidsai-nightly/label/xgboost -c rapidsai-nightly -c nvidia -c conda-forge \
                     python=3.6 cudatoolkit=10.0 \
-                    cudf=$RAPIDS_VERSION cuml cugraph gcsfs pynvml cuspatial xgboost\
+                    cudf=$RAPIDS_VERSION cuml cugraph gcsfs pynvml cuspatial xgboost \
                     dask-cudf
+        elif (( $RAPIDS_RESULT == 13 )) ;then #0.13 uses xgboost 1.0.2, low than that use 1.0.0
+            echo "Installing RAPIDS $RAPIDS_VERSION packages from the stable release channel"
+            echo "Please standby, this will take a few minutes..."
+            # install RAPIDS packages
+            conda install -y --prefix /usr/local \
+                -c rapidsai/label/main -c rapidsai -c nvidia -c conda-forge \
+                python=3.6 cudatoolkit=10.0 \
+                cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost=1.0.2dev.rapidsai$RAPIDS_VERSION \
+                dask-cudf
         else #Stable packages
             echo "Installing RAPIDS $RAPIDS_VERSION packages from the stable release channel"
             echo "Please standby, this will take a few minutes..."
@@ -51,7 +63,7 @@ install_RAPIDS () {
             conda install -y --prefix /usr/local \
                 -c rapidsai/label/main -c rapidsai -c nvidia -c conda-forge \
                 python=3.6 cudatoolkit=10.0 \
-                cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost=1.0.0dev.rapidsai$RAPIDS_VERSION\\
+                cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost=1.0.0dev.rapidsai$RAPIDS_VERSION \
                 dask-cudf
         fi
           
@@ -60,6 +72,8 @@ install_RAPIDS () {
         cp /usr/local/lib/libcudf.so /usr/lib/libcudf.so
         cp /usr/local/lib/librmm.so /usr/lib/librmm.so
         cp /usr/local/lib/libnccl.so /usr/lib/libnccl.so
+        echo "Copying RAPIDS compatible xgboost"	
+        cp /usr/local/lib/libxgboost.so /usr/lib/libxgboost.so
     fi
 
     echo ""
@@ -73,38 +87,40 @@ rapids_version_check () {
   if  [ $RESPONSE == "NIGHTLY" ]|| [ $RESPONSE == "nightly" ]  || [ $RESPONSE == "N" ] || [ $RESPONSE == "n" ] ; then
     RAPIDS_VERSION="0.$NIGHTLIES"
     RAPIDS_RESULT=$NIGHTLIES
-    echo "Starting to prep Colab for install RAPIDS Version 0.$NIGHTLIES nightly"
+    echo "Starting to prep Colab for install RAPIDS Version $RAPIDS_VERSION nightly"
   elif [ $RESPONSE == "STABLE" ]|| [ $RESPONSE == "stable" ]  || [ $RESPONSE == "S" ] || [ $RESPONSE == "s" ] ; then
     RAPIDS_VERSION="0.$STABLE"
     RAPIDS_RESULT=$STABLE
-    echo "Starting to prep Colab for install RAPIDS Version 0.$STABLE stable"
+    echo "Starting to prep Colab for install RAPIDS Version $RAPIDS_VERSION stable"
   else
     RAPIDS_RESULT=$(awk '{print $1*$2}' <<<"${RESPONSE} ${MULT}")
-    if (( $RAPIDS_RESULT > $NIGHTLIES )) ;then
+    if (( $RAPIDS_RESULT > $NIGHTLIES )) ; then
       RAPIDS_VERSION="0.$NIGHTLIES"
       RAPIDS_RESULT=$NIGHTLIES
-      echo "RAPIDS Version modified to 0.$NIGHTLIES nightly"
-    elif (($RAPIDS_RESULT < $LOWEST)) ;then
+      echo "RAPIDS Version modified to $RAPIDS_VERSION nightly"
+    elif (($RAPIDS_RESULT < $LOWEST)) ; then
       RAPIDS_VERSION="0.$LOWEST"
       RAPIDS_RESULT=$LOWEST
-      echo "RAPIDS Version modified to 0.$LOWEST stable"
+      echo "RAPIDS Version modified to $RAPIDS_VERSION stable"
+    elif (($RAPIDS_RESULT >= $LOWEST)) &&  (( $RAPIDS_RESULT <= $NIGHTLIES )) ; then
+      RAPIDS_VERSION="0.$RAPIDS_RESULT"
+      echo "RAPIDS Version to install is $RAPIDS_VERSION"
     else
-      RAPIDS_VERSION="0.$STABLE"
-      RAPIDS_RESULT=$STABLE
-      echo "RAPIDS Version modified to 0.$STABLE stable"
+      echo "You've entered and incorrect RAPIDS version.  please make the neccessary changes and try again"
     fi
   fi
 }
 
 if [ -n "$1" ] ; then
   RESPONSE=$1
-  echo $RESPONSE
   rapids_version_check
   install_RAPIDS
 else
   echo "As you didn't specify a RAPIDS version, please enter in the box your desired RAPIDS version (ex: '0.11' or '0.12', between 0.$LOWEST to 0.$NIGHTLIES, without the quotes)"
-  echo "and hit Enter. If you need stability, use 0.$STABLE. If you want bleeding edge, use our nightly version (0.$NIGHTLIES), but things can break."
+  echo "and hit Enter. If you need stability, use 0.$STABLE. If you want bleeding edge, use our nightly version (0.$NIGHTLIES), but understand that caveats that come with nightly versions."
   read RESPONSE
   rapids_version_check
   install_RAPIDS
 fi
+
+
