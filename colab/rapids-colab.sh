@@ -88,10 +88,6 @@ rapids_version_check () {
       RAPIDS_VERSION="0.$LOWEST"
       RAPIDS_RESULT=$LOWEST
       echo "RAPIDS Version modified to 0.$LOWEST stable"
-    else
-      RAPIDS_VERSION="0.$STABLE"
-      RAPIDS_RESULT=$STABLE
-      echo "RAPIDS Version modified to 0.$STABLE stable"
     fi
   fi
 }
