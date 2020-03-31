@@ -1,5 +1,3 @@
-#notebooks update
-%%writefile rapidsai-csp-utils/colab/rapids-colab.sh
 #!/bin/bash
 
 MULT="100"
@@ -108,7 +106,7 @@ if [ -n "$1" ] ; then
   install_RAPIDS
 else
   echo "As you didn't specify a RAPIDS version, please enter in the box your desired RAPIDS version (ex: '0.11' or '0.12', between 0.$LOWEST to 0.$NIGHTLIES, without the quotes)"
-  echo "and hit Enter. If you need stability, use 0.$STABLE. If you want bleeding edge, use our nightly version (0.$NIGHTLIES), but things can break."
+  echo "and hit Enter. If you need stability, use 0.$STABLE. If you want bleeding edge, use our nightly version (0.$NIGHTLIES), but understand that caveats that come with nightly versions."
   read RESPONSE
   rapids_version_check
   install_RAPIDS
