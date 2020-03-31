@@ -1,9 +1,14 @@
+#notebooks update
+%%writefile rapidsai-csp-utils/colab/rapids-colab.sh
 #!/bin/bash
 
 MULT="100"
 NIGHTLIES=14
 STABLE=13
 LOWEST=11
+
+RAPIDS_VERSION="0.$STABLE"
+RAPIDS_RESULT=$STABLE
  
 echo "PLEASE READ"
 echo "********************************************************************************************************"
@@ -73,28 +78,32 @@ rapids_version_check () {
   if  [ $RESPONSE == "NIGHTLY" ]|| [ $RESPONSE == "nightly" ]  || [ $RESPONSE == "N" ] || [ $RESPONSE == "n" ] ; then
     RAPIDS_VERSION="0.$NIGHTLIES"
     RAPIDS_RESULT=$NIGHTLIES
-    echo "Starting to prep Colab for install RAPIDS Version 0.$NIGHTLIES nightly"
+    echo "Starting to prep Colab for install RAPIDS Version $RAPIDS_VERSION nightly"
   elif [ $RESPONSE == "STABLE" ]|| [ $RESPONSE == "stable" ]  || [ $RESPONSE == "S" ] || [ $RESPONSE == "s" ] ; then
     RAPIDS_VERSION="0.$STABLE"
     RAPIDS_RESULT=$STABLE
-    echo "Starting to prep Colab for install RAPIDS Version 0.$STABLE stable"
+    echo "Starting to prep Colab for install RAPIDS Version $RAPIDS_VERSION stable"
   else
     RAPIDS_RESULT=$(awk '{print $1*$2}' <<<"${RESPONSE} ${MULT}")
     if (( $RAPIDS_RESULT > $NIGHTLIES )) ;then
       RAPIDS_VERSION="0.$NIGHTLIES"
       RAPIDS_RESULT=$NIGHTLIES
-      echo "RAPIDS Version modified to 0.$NIGHTLIES nightly"
+      echo "RAPIDS Version modified to $RAPIDS_VERSION nightly"
     elif (($RAPIDS_RESULT < $LOWEST)) ;then
       RAPIDS_VERSION="0.$LOWEST"
       RAPIDS_RESULT=$LOWEST
-      echo "RAPIDS Version modified to 0.$LOWEST stable"
+      echo "RAPIDS Version modified to $RAPIDS_VERSION stable"
+    elif (($RAPIDS_RESULT >= $LOWEST)) &&  (( $RAPIDS_RESULT <= $NIGHTLIES )) ;then
+      RAPIDS_VERSION="0.$RAPIDS_RESULT"
+      echo "RAPIDS Version to install is $RAPIDS_VERSION"
+    else
+      echo "You've entered and incorrect RAPIDS version.  please make the neccessary changes and try again"
     fi
   fi
 }
 
 if [ -n "$1" ] ; then
   RESPONSE=$1
-  echo $RESPONSE
   rapids_version_check
   install_RAPIDS
 else
