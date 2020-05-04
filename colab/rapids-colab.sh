@@ -46,7 +46,7 @@ install_RAPIDS () {
                     -c rapidsai-nightly/label/xgboost -c rapidsai-nightly -c nvidia -c conda-forge \
                     python=3.6 cudatoolkit=10.0 \
                     cudf=$RAPIDS_VERSION cuml cugraph gcsfs pynvml cuspatial xgboost \
-                    dask-cudf
+                    dask-cudf cusignal
         elif (( $RAPIDS_RESULT == 13 )) ;then #0.13 uses xgboost 1.0.2, low than that use 1.0.0
             echo "Installing RAPIDS $RAPIDS_VERSION packages from the stable release channel"
             echo "Please standby, this will take a few minutes..."
@@ -55,7 +55,7 @@ install_RAPIDS () {
                 -c rapidsai/label/main -c rapidsai -c nvidia -c conda-forge \
                 python=3.6 cudatoolkit=10.0 \
                 cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost=1.0.2dev.rapidsai$RAPIDS_VERSION \
-                dask-cudf
+                dask-cudf cusignal
         else #Stable packages
             echo "Installing RAPIDS $RAPIDS_VERSION packages from the stable release channel"
             echo "Please standby, this will take a few minutes..."
@@ -64,7 +64,7 @@ install_RAPIDS () {
                 -c rapidsai/label/main -c rapidsai -c nvidia -c conda-forge \
                 python=3.6 cudatoolkit=10.0 \
                 cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost=1.0.0dev.rapidsai$RAPIDS_VERSION \
-                dask-cudf
+                dask-cudf cusignal
         fi
           
         echo "Copying shared object files to /usr/lib"
