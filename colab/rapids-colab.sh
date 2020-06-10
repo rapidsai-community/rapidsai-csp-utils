@@ -1,8 +1,8 @@
 #!/bin/bash
 
 MULT="100"
-NIGHTLIES=14
-STABLE=13
+NIGHTLIES=15
+STABLE=14
 LOWEST=11
 
 RAPIDS_VERSION="0.$STABLE"
@@ -11,13 +11,12 @@ RAPIDS_RESULT=$STABLE
 echo "PLEASE READ"
 echo "********************************************************************************************************"
 echo "Changes:"
-echo "1. Now that most people have migrated, we have rem0ved the migration notice."
-echo "2. default stable version is now 0.$STABLE.  Nightly is now 0.$NIGHTLIES"
-echo "3. You can now declare your RAPIDS version as a CLI option and skip the user prompts (ex: '0.$STABLE' or '0.$NIGHTLIES', between 0.$LOWEST to 0.$NIGHTLIES, without the quotes): "
+echo "1. Default stable version is now 0.$STABLE.  Nightly is now 0.$NIGHTLIES.  Right now, please use nightlies (0.$NIGHTLIES) as we are trying to reduce the conda solving time for stable (0.$STABLE)"
+echo "2. You can now declare your RAPIDSAI version as a CLI option and skip the user prompts (ex: '0.$STABLE' or '0.$NIGHTLIES', between 0.$LOWEST to 0.$NIGHTLIES, without the quotes): "
 echo '        "!bash rapidsai-csp-utils/colab/rapids-colab.sh <version/label>"'
 echo "        Examples: '!bash rapidsai-csp-utils/colab/rapids-colab.sh 0.$STABLE', or '!bash rapidsai-csp-utils/colab/rapids-colab.sh stable', or '!bash rapidsai-csp-utils/colab/rapids-colab.sh s'"
 echo "                  '!bash rapidsai-csp-utils/colab/rapids-colab.sh 0.$NIGHTLIES, or '!bash rapidsai-csp-utils/colab/rapids-colab.sh nightly', or '!bash rapidsai-csp-utils/colab/rapids-colab.sh n'"
-echo "Enjoy using RAPIDS!"
+echo "Enjoy using RAPIDS!  If you have any issues with or suggestions for RAPIDSAI on Colab, please create a bug request on https://github.com/rapidsai/rapidsai-csp-utils/issues/new.  Thanks!"
 
 
 install_RAPIDS () {
@@ -36,9 +35,9 @@ install_RAPIDS () {
         bash ./Miniconda3-4.5.4-Linux-x86_64.sh -b -f -p /usr/local
 
         #Installing another conda package first something first seems to fix https://github.com/rapidsai/rapidsai-csp-utils/issues/4
-        conda update -c conda-forge -c defaults conda python=3.6 -y 
-        conda update -c conda-forge -c defaults --all python=3.6 -y
-        conda install -y --prefix /usr/local -c conda-forge -c defaults openssl python=3.6
+        conda update -c conda-forge -c defaults conda -y 
+        conda update -c conda-forge -c defaults --all -y 
+        conda install -y --prefix /usr/local -c conda-forge -c defaults openssl six python=3.6
         
         if (( $RAPIDS_RESULT == $NIGHTLIES )) ;then #Newest nightly packages.  UPDATE EACH RELEASE!
         echo "Installing RAPIDS $RAPIDS_VERSION packages from the nightly release channel"
@@ -46,7 +45,7 @@ install_RAPIDS () {
         # install RAPIDS packages
             conda install -y --prefix /usr/local \
                     -c rapidsai-nightly/label/xgboost -c rapidsai-nightly -c nvidia -c conda-forge -c defaults \
-                    python=3.6 cudatoolkit=10.1 \
+                    python=3.6 cudatoolkit=10.0 \
                     cudf=$RAPIDS_VERSION cuml cugraph gcsfs pynvml cuspatial xgboost \
                     dask-cudf cusignal
         elif (( $RAPIDS_RESULT == 13 )) ;then #0.13 uses xgboost 1.0.2, low than that use 1.0.0
@@ -54,19 +53,28 @@ install_RAPIDS () {
             echo "Please standby, this will take a few minutes..."
             # install RAPIDS packages
             conda install -y --prefix /usr/local \
-                -c rapidsai -c nvidia -c conda-forge -c defaults \
-                python=3.6 cudatoolkit=10.1 \
+                -c rapidsai/label/main -c rapidsai -c nvidia -c conda-forge -c defaults \
+                python=3.6 cudatoolkit=10.0 \
                 cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost=1.0.2dev.rapidsai$RAPIDS_VERSION \
                 dask-cudf cusignal numba=0.48
-        else #Stable packages
+        elif (( $RAPIDS_RESULT == 12 )) ;then #0.12 and below use 1.0.0
             echo "Installing RAPIDS $RAPIDS_VERSION packages from the stable release channel"
             echo "Please standby, this will take a few minutes..."
             # install RAPIDS packages
             conda install -y --prefix /usr/local \
                 -c rapidsai/label/main -c rapidsai -c nvidia -c conda-forge -c defaults \
-                python=3.6 cudatoolkit=10.1 \
+                python=3.6 cudatoolkit=10.0 \
                 cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost=1.0.0dev.rapidsai$RAPIDS_VERSION \
                 dask-cudf cusignal numba=0.48
+        else #Stable packages #0.14 uses xgboost 1.11.0
+            echo "Installing RAPIDS $RAPIDS_VERSION packages from the stable release channel"
+            echo "Please standby, this will take a few minutes..."
+            # install RAPIDS packages
+            conda install -y --prefix /usr/local \
+                -c rapidsai/label/main -c rapidsai -c nvidia -c conda-forge -c defaults \
+                python=3.6 cudatoolkit=10.0 \
+                cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost=1.1.0dev.rapidsai$RAPIDS_VERSION \
+                dask-cudf cusignal 
         fi
           
         echo "Copying shared object files to /usr/lib"
