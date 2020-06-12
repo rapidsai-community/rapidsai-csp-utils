@@ -11,7 +11,7 @@ RAPIDS_RESULT=$STABLE
 echo "PLEASE READ"
 echo "********************************************************************************************************"
 echo "Changes:"
-echo "1. Default stable version is now 0.$STABLE.  Nightly is now 0.$NIGHTLIES.  Right now, please use nightlies (0.$NIGHTLIES) as we are trying to reduce the conda solving time for stable (0.$STABLE)"
+echo "1. Default stable version is now 0.$STABLE.  Nightly is now 0.$NIGHTLIES.  Right now, please use stable (0.$STABLE) as we are trying to reduce the conda solving time for nightlies (0.$NIGHTLIES)"
 echo "2. You can now declare your RAPIDSAI version as a CLI option and skip the user prompts (ex: '0.$STABLE' or '0.$NIGHTLIES', between 0.$LOWEST to 0.$NIGHTLIES, without the quotes): "
 echo '        "!bash rapidsai-csp-utils/colab/rapids-colab.sh <version/label>"'
 echo "        Examples: '!bash rapidsai-csp-utils/colab/rapids-colab.sh 0.$STABLE', or '!bash rapidsai-csp-utils/colab/rapids-colab.sh stable', or '!bash rapidsai-csp-utils/colab/rapids-colab.sh s'"
