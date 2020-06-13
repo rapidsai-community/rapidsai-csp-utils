@@ -1,13 +1,14 @@
 name: null
 channels:
   - nvidia
-  - rapidsai-nightly
+  - rapidsai/label/main
   - conda-forge
   - defaults
 dependencies:
   - _libgcc_mutex=0.1=conda_forge
   - _openmp_mutex=4.5=0_gnu
   - arrow-cpp=0.15.0=py36h090bef1_2
+  - asn1crypto=1.3.0=py36h9f0ad1d_1
   - blinker=1.4=py_1
   - bokeh=2.0.1=py36h9f0ad1d_0
   - boost=1.70.0=py36h9de70de_1
@@ -20,11 +21,12 @@ dependencies:
   - cachetools=4.1.0=py_1
   - cairo=1.16.0=hcf35c78_1003
   - certifi=2020.4.5.2=py36h9f0ad1d_0
+  - cffi=1.14.0=py36hd463f26_0
   - cfitsio=3.470=hb60a0a2_2
+  - chardet=3.0.4=py36h9f0ad1d_1006
   - click=7.1.2=pyh9f0ad1d_0
   - cloudpickle=1.4.1=py_0
   - conda-env=2.6.0=1
-  - conda-pack=0.4.0=py_0
   - contextvars=2.4=py_0
   - cryptography=2.9.2=py36h45558ae_0
   - cupy=7.5.0=py36h273e724_0
@@ -52,13 +54,14 @@ dependencies:
   - giflib=5.1.7=h516909a_1
   - glib=2.64.3=h6f030ca_0
   - glog=0.4.0=h49b9bf7_3
-  - google-auth=1.16.1=pyh9f0ad1d_0
+  - google-auth=1.17.1=py_0
   - google-auth-oauthlib=0.4.1=py_2
   - grpc-cpp=1.23.0=h18db393_0
   - hdf4=4.2.13=hf30be14_1003
   - hdf5=1.10.5=nompi_h3c11f04_1104
   - heapdict=1.0.1=py_0
   - icu=64.2=he1b5a44_1
+  - idna=2.9=py_1
   - immutables=0.14=py36h8c4c3a4_0
   - jinja2=2.11.2=pyh9f0ad1d_0
   - joblib=0.15.1=py_0
@@ -71,6 +74,7 @@ dependencies:
   - libcblas=3.8.0=14_openblas
   - libcurl=7.68.0=hda55be3_0
   - libdap4=3.20.4=hd3bb157_0
+  - libedit=3.1.20191231=h46ee950_0
   - libevent=2.1.10=h72c5cf5_0
   - libffi=3.2.1=he1b5a44_1007
   - libgcc-ng=9.2.0=h24d8f2e_2
@@ -123,20 +127,24 @@ dependencies:
   - pyarrow=0.15.0=py36h8b68381_1
   - pyasn1=0.4.8=py_0
   - pyasn1-modules=0.2.7=py_0
+  - pycosat=0.6.3=py36h8c4c3a4_1004
+  - pycparser=2.20=py_0
   - pyjwt=1.7.1=py_0
   - pynvml=8.0.4=py_0
   - pyopenssl=19.1.0=py_1
   - pyparsing=2.4.7=pyh9f0ad1d_0
+  - pysocks=1.7.1=py36h9f0ad1d_1
   - python=3.6.10=h8356626_1011_cpython
   - python-dateutil=2.8.1=py_0
   - python_abi=3.6=1_cp36m
   - pytz=2020.1=pyh9f0ad1d_0
-  - pyyaml=5.1.2=py36h516909a_0
+  - pyyaml=5.3.1=py36h8c4c3a4_0
   - re2=2020.04.01=he1b5a44_0
   - readline=8.0=hf8c457e_0
   - requests=2.23.0=pyh8c360ce_2
   - requests-oauthlib=1.2.0=py_0
-  - rsa=4.0=py_0
+  - rsa=4.2=pyh9f0ad1d_0
+  - ruamel_yaml=0.15.80=py36h8c4c3a4_1001
   - scikit-learn=0.23.1=py36h0e1014b_0
   - scipy=1.4.1=py36h2d22cac_3
   - setuptools=47.1.1=py36h9f0ad1d_0
@@ -171,40 +179,32 @@ dependencies:
   - xorg-xextproto=7.3.0=h14c3975_1002
   - xorg-xproto=7.0.31=h14c3975_1007
   - xz=5.2.5=h516909a_0
+  - yaml=0.2.5=h516909a_0
   - zict=2.0.0=py_0
   - zlib=1.2.11=h516909a_1006
   - zstd=1.4.3=h3b9ef0a_0
-  - asn1crypto=0.24.0=py36_0
-  - cffi=1.11.5=py36h9745a5d_0
-  - chardet=3.0.4=py36h0f667ec_1
   - conda=4.5.4=py36_0
-  - idna=2.6=py36h82fb2a8_1
-  - libedit=3.1.20170329=h6b74fdf_2
   - numba=0.49.1=py36h0573a6f_0
-  - pycosat=0.6.3=py36h0a5515d_0
-  - pycparser=2.18=py36hf9f622e_1
-  - pysocks=1.6.8=py36_0
-  - ruamel_yaml=0.15.37=py36h14c3975_2
-  - yaml=0.1.7=had09818_2
   - cudatoolkit=10.0.130=0
   - cudnn=7.6.0=cuda10.0_0
-  - cudf=0.15.0a200611=py36_gd73f7ae49_1112
-  - cugraph=0.15.0a200611=py36_gff154939_206
-  - cuml=0.15.0a200611=cuda10.0_py36_g4b3213d9d_443
-  - cusignal=0.15.0a200611=py36_56
-  - cuspatial=0.15.0a200611=py36_113
-  - dask-cudf=0.15.0a200611=py36_gd73f7ae49_1112
-  - libcudf=0.15.0a200611=cuda10.0_gd73f7ae49_1112
-  - libcugraph=0.15.0a200611=cuda10.0_gff154939_206
-  - libcuml=0.15.0a200611=cuda10.0_g4b3213d9d_443
-  - libcumlprims=0.15.0a200607=cuda10.0_39
-  - libcuspatial=0.15.0a200611=cuda10.0_113
-  - librmm=0.15.0a200611=cuda10.0_g77ca84f_147
+  - libcumlprims=0.14.0=cuda10.0_0
+  - cudf=0.14.0=py36_0
+  - cugraph=0.14.0=py36_0
+  - cuml=0.14.0=cuda10.0_py36_0
+  - cusignal=0.14.0=py36_0
+  - cuspatial=0.14.0=py36_0
+  - dask-cudf=0.14.0=py36_0
+  - libcudf=0.14.0=cuda10.0_0
+  - libcugraph=0.14.0=cuda10.0_0
+  - libcuml=0.14.0=cuda10.0_0
+  - libcuspatial=0.14.0=cuda10.0_0
+  - libnvstrings=0.14.0=cuda10.0_0
+  - librmm=0.14.0=cuda10.0_0
   - libxgboost=1.1.0dev.rapidsai0.14=cuda10.0_0
+  - nvstrings=0.14.0=py36_0
   - py-xgboost=1.1.0dev.rapidsai0.14=cuda10.0py36_0
-  - rmm=0.15.0a200611=py36_g77ca84f_147
-  - ucx=1.8.0+gf6ec8d4=hcebc08b_20
-  - ucx-py=0.15.0a200610+gf6ec8d4=py36_63
+  - rmm=0.14.0=py36_0
+  - ucx=1.8.0+gf6ec8d4=cuda10.0_20
+  - ucx-py=0.14.0+gf6ec8d4=py36_0
   - xgboost=1.1.0dev.rapidsai0.14=cuda10.0py36_0
 prefix: /usr/local
-
