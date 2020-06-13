@@ -38,7 +38,7 @@ install_RAPIDS () {
         echo "python 3.6.*" > /usr/local/conda-meta/pinned
 
         #Installing another conda package first something first seems to fix https://github.com/rapidsai/rapidsai-csp-utils/issues/4
-        conda update -y -c conda-forge -c defaults conda
+        conda install --channel defaults conda python=3.6 --yes
         conda update -y -c conda-forge -c defaults --all
         conda install -y --prefix /usr/local -c conda-forge -c defaults openssl six
 
@@ -46,7 +46,11 @@ install_RAPIDS () {
         echo "Installing RAPIDS $RAPIDS_VERSION packages from the nightly release channel"
         echo "Please standby, this will take a few minutes..."
         # install RAPIDS packages
-            conda env update --prefix /usr/local --file rapidsai-csp-utils/colab/rapidsai15.yml
+            conda install -y --prefix /usr/local \
+                    -c rapidsai-nightly/label/xgboost -c rapidsai-nightly -c nvidia -c conda-forge -c defaults \
+                    python=3.6 cudatoolkit=10.0 \
+                    cudf=$RAPIDS_VERSION cuml cugraph gcsfs pynvml cuspatial xgboost \
+                    dask-cudf cusignal
         elif (( $RAPIDS_RESULT == 13 )) ;then #0.13 uses xgboost 1.0.2, low than that use 1.0.0
             echo "Installing RAPIDS $RAPIDS_VERSION packages from the stable release channel"
             echo "Please standby, this will take a few minutes..."
@@ -56,7 +60,11 @@ install_RAPIDS () {
             echo "Installing RAPIDS $RAPIDS_VERSION packages from the stable release channel"
             echo "Please standby, this will take a few minutes..."
             # install RAPIDS packages
-            conda env update --prefix /usr/local --file rapidsai-csp-utils/colab/rapidsai12.yml
+            conda install -y --prefix /usr/local \
+                -c rapidsai/label/main -c rapidsai -c nvidia -c conda-forge -c defaults \
+                python=3.6 cudatoolkit=10.0 \
+                cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost=1.0.0dev.rapidsai$RAPIDS_VERSION \
+                dask-cudf cusignal numba=0.48
         else #Stable packages #0.14 uses xgboost 1.11.0
             echo "Installing RAPIDS $RAPIDS_VERSION packages from the stable release channel"
             echo "Please standby, this will take a few minutes..."
