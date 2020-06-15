@@ -12,7 +12,7 @@ echo "PLEASE READ"
 echo "********************************************************************************************************"
 echo "Changes:"
 echo "1. Default stable version is now 0.$STABLE.  Nightly is now 0.$NIGHTLIES.  We have fixed the long conda install.  Hooray!"
-echo "2. For stable releases, we now use static yml files, in case of incompatible dependancy changes later.
+echo "2. For stable releases, we now use static yml files, in case of incompatible dependancy changes later."
 echo "3. You can now declare your RAPIDSAI version as a CLI option and skip the user prompts (ex: '0.$STABLE' or '0.$NIGHTLIES', between 0.$LOWEST to 0.$NIGHTLIES, without the quotes): "
 echo '        "!bash rapidsai-csp-utils/colab/rapids-colab.sh <version/label>"'
 echo "        Examples: '!bash rapidsai-csp-utils/colab/rapids-colab.sh 0.$STABLE', or '!bash rapidsai-csp-utils/colab/rapids-colab.sh stable', or '!bash rapidsai-csp-utils/colab/rapids-colab.sh s'"
