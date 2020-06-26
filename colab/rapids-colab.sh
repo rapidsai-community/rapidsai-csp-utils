@@ -5,6 +5,12 @@ NIGHTLIES=15
 STABLE=14
 LOWEST=13
 
+CUDA_RAPIDS15=10.1
+CUDA_RAPIDS14=10.1
+CUDA_RAPIDS13=10.1
+CUDA_RAPIDS12=10.0
+
+
 RAPIDS_VERSION="0.$STABLE"
 RAPIDS_RESULT=$STABLE
  
@@ -48,7 +54,7 @@ install_RAPIDS () {
         # install RAPIDS packages
             conda install -y --prefix /usr/local \
                     -c rapidsai-nightly/label/xgboost -c rapidsai-nightly -c nvidia -c conda-forge -c defaults \
-                    python=3.6 cudatoolkit=10.0 \
+                    python=3.6 cudatoolkit=$CUDA_RAPIDS15 \
                     cudf=$RAPIDS_VERSION cuml cugraph gcsfs pynvml cuspatial xgboost \
                     dask-cudf cusignal
         elif (( $RAPIDS_RESULT == 13 )) ;then #0.13 uses xgboost 1.0.2, low than that use 1.0.0
@@ -57,7 +63,7 @@ install_RAPIDS () {
             # install RAPIDS packages
             conda install -y --prefix /usr/local \
                 -c rapidsai -c nvidia -c conda-forge -c defaults \
-                python=3.6 cudatoolkit=10.1 \
+                python=3.6 cudatoolkit=$CUDA_RAPIDS13 \
                 cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost=1.0.2dev.rapidsai$RAPIDS_VERSION \
                 dask-cudf cusignal numba=0.48
         elif (( $RAPIDS_RESULT == 12 )) ;then #0.12 and below use 1.0.0
@@ -66,7 +72,7 @@ install_RAPIDS () {
             # install RAPIDS packages
             conda install -y --prefix /usr/local \
                 -c rapidsai/label/main -c rapidsai -c nvidia -c conda-forge -c defaults \
-                python=3.6 cudatoolkit=10.0 \
+                python=3.6 cudatoolkit=$CUDA_RAPIDS12 \
                 cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost=1.0.0dev.rapidsai$RAPIDS_VERSION \
                 dask-cudf cusignal numba=0.48
         else #Stable packages #0.14 uses xgboost 1.11.0
@@ -75,7 +81,7 @@ install_RAPIDS () {
             # install RAPIDS packages
             conda install -y --prefix /usr/local \
                 -c rapidsai/label/main -c rapidsai -c nvidia -c conda-forge -c defaults \
-                python=3.6 cudatoolkit=10.0 \
+                python=3.6 cudatoolkit=$CUDA_RAPIDS14 \
                 cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost=1.1.0dev.rapidsai$RAPIDS_VERSION \
                 dask-cudf cusignal 
         fi
