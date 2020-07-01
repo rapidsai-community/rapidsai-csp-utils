@@ -5,6 +5,8 @@ NIGHTLIES=15
 STABLE=14
 LOWEST=13
 
+CTK_VERSION=10.1
+
 RAPIDS_VERSION="0.$STABLE"
 RAPIDS_RESULT=$STABLE
  
@@ -48,7 +50,7 @@ install_RAPIDS () {
         # install RAPIDS packages
             conda install -y --prefix /usr/local \
                     -c rapidsai-nightly/label/xgboost -c rapidsai-nightly -c nvidia -c conda-forge -c defaults \
-                    python=3.6 cudatoolkit=10.0 \
+                    python=3.6 cudatoolkit=$CTK_VERSION \
                     cudf=$RAPIDS_VERSION cuml cugraph gcsfs pynvml cuspatial xgboost \
                     dask-cudf cusignal
         elif (( $RAPIDS_RESULT == 13 )) ;then #0.13 uses xgboost 1.0.2, low than that use 1.0.0
@@ -57,17 +59,8 @@ install_RAPIDS () {
             # install RAPIDS packages
             conda install -y --prefix /usr/local \
                 -c rapidsai -c nvidia -c conda-forge -c defaults \
-                python=3.6 cudatoolkit=10.1 \
+                python=3.6 cudatoolkit=$CTK_VERSION \
                 cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost=1.0.2dev.rapidsai$RAPIDS_VERSION \
-                dask-cudf cusignal numba=0.48
-        elif (( $RAPIDS_RESULT == 12 )) ;then #0.12 and below use 1.0.0
-            echo "Installing RAPIDS $RAPIDS_VERSION packages from the stable release channel"
-            echo "Please standby, this will take a few minutes..."
-            # install RAPIDS packages
-            conda install -y --prefix /usr/local \
-                -c rapidsai/label/main -c rapidsai -c nvidia -c conda-forge -c defaults \
-                python=3.6 cudatoolkit=10.0 \
-                cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost=1.0.0dev.rapidsai$RAPIDS_VERSION \
                 dask-cudf cusignal numba=0.48
         else #Stable packages #0.14 uses xgboost 1.11.0
             echo "Installing RAPIDS $RAPIDS_VERSION packages from the stable release channel"
@@ -75,7 +68,7 @@ install_RAPIDS () {
             # install RAPIDS packages
             conda install -y --prefix /usr/local \
                 -c rapidsai/label/main -c rapidsai -c nvidia -c conda-forge -c defaults \
-                python=3.6 cudatoolkit=10.0 \
+                python=3.6 cudatoolkit=$CTK_VERSION \
                 cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost=1.1.0dev.rapidsai$RAPIDS_VERSION \
                 dask-cudf cusignal 
         fi
@@ -129,7 +122,7 @@ if [ -n "$1" ] ; then
   rapids_version_check
   install_RAPIDS
 else
-  echo "As you didn't specify a RAPIDS version, please enter in the box your desired RAPIDS version (ex: '0.11' or '0.12', between 0.$LOWEST to 0.$NIGHTLIES, without the quotes)"
+  echo "As you didn't specify a RAPIDS version, please enter in the box your desired RAPIDS version (ex: '0.$STABLE' or '0.$NIGHTLIES', between 0.$LOWEST to 0.$NIGHTLIES, without the quotes)"
   echo "and hit Enter. If you need stability, use 0.$STABLE. If you want bleeding edge, use our nightly version (0.$NIGHTLIES), but understand that caveats that come with nightly versions."
   read RESPONSE
   rapids_version_check
