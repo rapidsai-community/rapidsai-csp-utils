@@ -1,8 +1,8 @@
 #!/bin/bash
 
 MULT="100"
-NIGHTLIES=15
 STABLE=14
+NIGHTLIES=15
 LOWEST=13
 
 CTK_VERSION=10.1
@@ -13,8 +13,9 @@ RAPIDS_RESULT=$STABLE
 echo "PLEASE READ"
 echo "********************************************************************************************************"
 echo "Changes:"
-echo "1. Default stable version is now 0.$STABLE.  Nightly is now 0.$NIGHTLIES.  We have fixed the long conda install.  Hooray!"
-echo "2. You can now declare your RAPIDSAI version as a CLI option and skip the user prompts (ex: '0.$STABLE' or '0.$NIGHTLIES', between 0.$LOWEST to 0.$NIGHTLIES, without the quotes): "
+echo "1. IMPORTANT CHANGES: RAPIDS on Colab will be pegged to 0.14 Stable until further notice."
+echo "2. Default stable version is now 0.$STABLE.  Nightly is now 0.$NIGHTLIES.  We have fixed the long conda install.  Hooray!"
+echo "3. You can now declare your RAPIDSAI version as a CLI option and skip the user prompts (ex: '0.$STABLE' or '0.$NIGHTLIES', between 0.$LOWEST to 0.$NIGHTLIES, without the quotes): "
 echo '        "!bash rapidsai-csp-utils/colab/rapids-colab.sh <version/label>"'
 echo "        Examples: '!bash rapidsai-csp-utils/colab/rapids-colab.sh 0.$STABLE', or '!bash rapidsai-csp-utils/colab/rapids-colab.sh stable', or '!bash rapidsai-csp-utils/colab/rapids-colab.sh s'"
 echo "                  '!bash rapidsai-csp-utils/colab/rapids-colab.sh 0.$NIGHTLIES, or '!bash rapidsai-csp-utils/colab/rapids-colab.sh nightly', or '!bash rapidsai-csp-utils/colab/rapids-colab.sh n'"
@@ -50,9 +51,9 @@ install_RAPIDS () {
         # install RAPIDS packages
             conda install -y --prefix /usr/local \
                     -c rapidsai-nightly/label/xgboost -c rapidsai-nightly -c nvidia -c conda-forge -c defaults \
-                    python=3.6 cudatoolkit=$CTK_VERSION \
+                    python=3.6 gdal=3.0.4 cudatoolkit=$CTK_VERSION \
                     cudf=$RAPIDS_VERSION cuml cugraph gcsfs pynvml cuspatial xgboost \
-                    dask-cudf cusignal
+                    dask-cudf cusignal  
         elif (( $RAPIDS_RESULT == 13 )) ;then #0.13 uses xgboost 1.0.2, low than that use 1.0.0
             echo "Installing RAPIDS $RAPIDS_VERSION packages from the stable release channel"
             echo "Please standby, this will take a few minutes..."
@@ -68,9 +69,9 @@ install_RAPIDS () {
             # install RAPIDS packages
             conda install -y --prefix /usr/local \
                 -c rapidsai/label/main -c rapidsai -c nvidia -c conda-forge -c defaults \
-                python=3.6 cudatoolkit=$CTK_VERSION \
+                python=3.6 gdal=3.0.4 cudatoolkit=$CTK_VERSION \
                 cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost=1.1.0dev.rapidsai$RAPIDS_VERSION \
-                dask-cudf cusignal 
+                dask-cudf cusignal
         fi
           
         echo "Copying shared object files to /usr/lib"
@@ -91,9 +92,12 @@ install_RAPIDS () {
 rapids_version_check () {
     
   if  [ $RESPONSE == "NIGHTLY" ]|| [ $RESPONSE == "nightly" ]  || [ $RESPONSE == "N" ] || [ $RESPONSE == "n" ] ; then
-    RAPIDS_VERSION="0.$NIGHTLIES"
-    RAPIDS_RESULT=$NIGHTLIES
-    echo "Starting to prep Colab for install RAPIDS Version $RAPIDS_VERSION nightly"
+    #RAPIDS_VERSION="0.$NIGHTLIES"
+    #RAPIDS_RESULT=$NIGHTLIES
+    #echo "Starting to prep Colab for install RAPIDS Version $RAPIDS_VERSION nightly"
+    RAPIDS_VERSION="0.$STABLE"
+    RAPIDS_RESULT=$STABLE
+    echo "Starting to prep Colab for install RAPIDS Version $RAPIDS_VERSION STABLE.  If you need to run 0.15 or higher, please use https://app.blazingsql.com/"
   elif [ $RESPONSE == "STABLE" ]|| [ $RESPONSE == "stable" ]  || [ $RESPONSE == "S" ] || [ $RESPONSE == "s" ] ; then
     RAPIDS_VERSION="0.$STABLE"
     RAPIDS_RESULT=$STABLE
@@ -101,9 +105,13 @@ rapids_version_check () {
   else
     RAPIDS_RESULT=$(awk '{print $1*$2}' <<<"${RESPONSE} ${MULT}")
     if (( $RAPIDS_RESULT > $NIGHTLIES )) ; then
-      RAPIDS_VERSION="0.$NIGHTLIES"
-      RAPIDS_RESULT=$NIGHTLIES
-      echo "RAPIDS Version modified to $RAPIDS_VERSION nightly"
+      # RAPIDS_VERSION="0.$NIGHTLIES"
+      # RAPIDS_RESULT=$NIGHTLIES
+      # echo "RAPIDS Version modified to $RAPIDS_VERSION nightly"
+      RAPIDS_VERSION="0.$STABLE"
+      RAPIDS_RESULT=$STABLE
+      echo "Starting to prep Colab for install RAPIDS Version $RAPIDS_VERSION STABLE.  If you need to run 0.15 or higher, please use https://app.blazingsql.com/"
+
     elif (($RAPIDS_RESULT < $LOWEST)) ; then
       RAPIDS_VERSION="0.$LOWEST"
       RAPIDS_RESULT=$LOWEST
