@@ -14,8 +14,8 @@ echo "PLEASE READ"
 echo "********************************************************************************************************"
 echo "Changes:"
 echo "1. IMPORTANT CHANGES: RAPIDS on Colab will be pegged to 0.14 Stable until further notice."
-echo "2. Default stable version is now 0.$STABLE.  Nightly is now 0.$NIGHTLIES.  We have fixed the long conda install.  Hooray!"
-echo "3. You can now declare your RAPIDSAI version as a CLI option and skip the user prompts (ex: '0.$STABLE' or '0.$NIGHTLIES', between 0.$LOWEST to 0.$NIGHTLIES, without the quotes): "
+echo "2. Default stable version is now 0.$STABLE.  Nightly will redirect to 0.$STABLE."
+echo "3. You can now declare your RAPIDSAI version as a CLI option and skip the user prompts (ex: '0.$STABLE' or '0.$NIGHTLIES', between 0.$LOWEST to 0.$STABLE, without the quotes): "
 echo '        "!bash rapidsai-csp-utils/colab/rapids-colab.sh <version/label>"'
 echo "        Examples: '!bash rapidsai-csp-utils/colab/rapids-colab.sh 0.$STABLE', or '!bash rapidsai-csp-utils/colab/rapids-colab.sh stable', or '!bash rapidsai-csp-utils/colab/rapids-colab.sh s'"
 echo "                  '!bash rapidsai-csp-utils/colab/rapids-colab.sh 0.$NIGHTLIES, or '!bash rapidsai-csp-utils/colab/rapids-colab.sh nightly', or '!bash rapidsai-csp-utils/colab/rapids-colab.sh n'"
@@ -116,8 +116,11 @@ rapids_version_check () {
       RAPIDS_VERSION="0.$LOWEST"
       RAPIDS_RESULT=$LOWEST
       echo "RAPIDS Version modified to $RAPIDS_VERSION stable"
-    elif (($RAPIDS_RESULT >= $LOWEST)) &&  (( $RAPIDS_RESULT <= $NIGHTLIES )) ; then
+    #elif (($RAPIDS_RESULT >= $LOWEST)) &&  (( $RAPIDS_RESULT <= $NIGHTLIES )) ; then
+    elif (($RAPIDS_RESULT >= $LOWEST)) &&  (( $RAPIDS_RESULT <= $STABLE )) ; then
+      RAPIDS_RESULT= $STABLE
       RAPIDS_VERSION="0.$RAPIDS_RESULT"
+      
       echo "RAPIDS Version to install is $RAPIDS_VERSION"
     else
       echo "You've entered and incorrect RAPIDS version.  please make the neccessary changes and try again"
@@ -128,6 +131,8 @@ rapids_version_check () {
 if [ -n "$1" ] ; then
   RESPONSE=$1
   rapids_version_check
+  RAPIDS_VERSION="0.$STABLE"
+  RAPIDS_RESULT=$STABLE
   install_RAPIDS
 else
   echo "As you didn't specify a RAPIDS version, please enter in the box your desired RAPIDS version (ex: '0.$STABLE' or '0.$NIGHTLIES', between 0.$LOWEST to 0.$NIGHTLIES, without the quotes)"
