@@ -13,7 +13,7 @@ RAPIDS_RESULT=$STABLE
 echo "PLEASE READ"
 echo "********************************************************************************************************"
 echo "Changes:"
-echo "1. IMPORTANT CHANGES: RAPIDS on Colab will be pegged to 0.14 Stable until further notice."
+echo "1. IMPORTANT CHANGES: RAPIDS on Colab will be pegged to 0.14 Stable until further notice.  This version of RAPIDS, while works, is outdated.  We have alternative solutions, https://app.blazingsql.com, to run the latest versions of RAPIDS"
 echo "2. Default stable version is now 0.$STABLE.  Nightly will redirect to 0.$STABLE."
 echo "3. You can now declare your RAPIDSAI version as a CLI option and skip the user prompts (ex: '0.$STABLE' or '0.$NIGHTLIES', between 0.$LOWEST to 0.$STABLE, without the quotes): "
 echo '        "!bash rapidsai-csp-utils/colab/rapids-colab.sh <version/label>"'
@@ -69,7 +69,7 @@ install_RAPIDS () {
             # install RAPIDS packages
             conda install -y --prefix /usr/local \
                 -c rapidsai/label/main -c rapidsai -c nvidia -c conda-forge -c defaults \
-                python=3.6 gdal=3.0.4 cudatoolkit=$CTK_VERSION \
+                python=3.6 gdal=3.0.4 llvm=9.0.0 cudatoolkit=$CTK_VERSION \
                 cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost=1.1.0dev.rapidsai$RAPIDS_VERSION \
                 dask-cudf cusignal
         fi
@@ -79,6 +79,7 @@ install_RAPIDS () {
         cp /usr/local/lib/libcudf.so /usr/lib/libcudf.so
         cp /usr/local/lib/librmm.so /usr/lib/librmm.so
         cp /usr/local/lib/libnccl.so /usr/lib/libnccl.so
+        cp /usr/local/lib/python3.6/dist-packages/llvmlite/binding/libllvmlite.so /usr/lib/libllvmlite.so
         echo "Copying RAPIDS compatible xgboost"	
         cp /usr/local/lib/libxgboost.so /usr/lib/libxgboost.so
     fi
