@@ -37,11 +37,11 @@ install_RAPIDS () {
         chmod +x Miniconda3-4.5.4-Linux-x86_64.sh
         bash ./Miniconda3-4.5.4-Linux-x86_64.sh -b -f -p /usr/local
 
-        #pin python3.6
-        echo "python 3.6.*" > /usr/local/conda-meta/pinned
+        #pin python3.7
+        echo "python 3.7.*" > /usr/local/conda-meta/pinned
 
         #Installing another conda package first something first seems to fix https://github.com/rapidsai/rapidsai-csp-utils/issues/4
-        conda install --channel defaults conda python=3.6 --yes
+        conda install --channel defaults conda python=3.7 --yes
         conda update -y -c conda-forge -c defaults --all
         conda install -y --prefix /usr/local -c conda-forge -c defaults openssl six
 
@@ -51,7 +51,7 @@ install_RAPIDS () {
         # install RAPIDS packages
             conda install -y --prefix /usr/local \
                     -c rapidsai-nightly/label/xgboost -c rapidsai-nightly -c nvidia -c conda-forge -c defaults \
-                    python=3.6 gdal=3.0.4 cudatoolkit=$CTK_VERSION \
+                    python=3.7 gdal=3.0.4 cudatoolkit=$CTK_VERSION \
                     cudf=$RAPIDS_VERSION cuml cugraph gcsfs pynvml cuspatial xgboost \
                     dask-cudf cusignal  
         elif (( $RAPIDS_RESULT == 13 )) ;then #0.13 uses xgboost 1.0.2, low than that use 1.0.0
@@ -60,7 +60,7 @@ install_RAPIDS () {
             # install RAPIDS packages
             conda install -y --prefix /usr/local \
                 -c rapidsai -c nvidia -c conda-forge -c defaults \
-                python=3.6 cudatoolkit=$CTK_VERSION \
+                python=3.7 cudatoolkit=$CTK_VERSION \
                 cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost=1.0.2dev.rapidsai$RAPIDS_VERSION \
                 dask-cudf cusignal numba=0.48
         else #Stable packages #0.14 uses xgboost 1.11.0
@@ -69,7 +69,7 @@ install_RAPIDS () {
             # install RAPIDS packages
             conda install -y --prefix /usr/local \
                 -c rapidsai/label/main -c rapidsai -c nvidia -c conda-forge -c defaults \
-                python=3.6 gdal=3.0.4 llvm=9.0.0 cudatoolkit=$CTK_VERSION \
+                python=3.7 gdal=3.0.4 llvm=9.0.0 cudatoolkit=$CTK_VERSION \
                 cudf=$RAPIDS_VERSION cuml cugraph cuspatial gcsfs pynvml xgboost=1.1.0dev.rapidsai$RAPIDS_VERSION \
                 dask-cudf cusignal
         fi
@@ -79,7 +79,7 @@ install_RAPIDS () {
         cp /usr/local/lib/libcudf.so /usr/lib/libcudf.so
         cp /usr/local/lib/librmm.so /usr/lib/librmm.so
         cp /usr/local/lib/libnccl.so /usr/lib/libnccl.so
-        cp /usr/local/lib/python3.6/dist-packages/llvmlite/binding/libllvmlite.so /usr/lib/libllvmlite.so
+        cp /usr/local/lib/python3.7/dist-packages/llvmlite/binding/libllvmlite.so /usr/lib/libllvmlite.so
         echo "Copying RAPIDS compatible xgboost"	
         cp /usr/local/lib/libxgboost.so /usr/lib/libxgboost.so
     fi
