@@ -1,6 +1,7 @@
 #!/bin/bash
 
 MULT="100"
+
 STABLE=18
 NIGHTLIES=19
 LOWEST=17
@@ -53,7 +54,7 @@ install_RAPIDS () {
                 python=3.7 cudatoolkit=$CTK_VERSION \
                 rapids=$RAPIDS_VERSION \
                 llvmlite gcsfs openssl
-        elif (( $RAPIDS_RESULT == 13 )) ; then
+        elif (( $RAPIDS_RESULT == $LOWEST )) ; then
             echo "Installing RAPIDS $RAPIDS_VERSION packages from the stable release channel"
             echo "Please standby, this will take a few minutes..."
             # install RAPIDS packages
