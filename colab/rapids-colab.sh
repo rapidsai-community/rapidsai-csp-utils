@@ -24,9 +24,12 @@ echo "	sys.path = sys.path[:dist_package_index] + ['/usr/local/lib/python3.7/sit
 echo "	sys.path"
 echo "	exec(open('rapidsai-csp-utils/colab/update_modules.py').read(), globals())"
 echo ""
-echo "2. IMPORTANT NOTICE: CuGraph's Louvain requires a Volta+ GPU (T4, V100).  If you get a P4 or P100 and intend to use Louvain, please FACTORY RESET your instance and try to get a compatible GPU"
-echo "3. Default stable version is now 0.$STABLE.  Nightly is now 0.$NIGHTLIES."
-echo "3. You can declare your RAPIDSAI version as a CLI option and skip the user prompts (ex: '0.$STABLE' or '0.$NIGHTLIES', between 0.$LOWEST to 0.$NIGHTLIES, without the quotes): "
+echo "2. BlazingSQL is now also installed with RAPIDS on Colab!  To use BlazingSQL, before you import it , you will need to export the CONDA_Prefix with this code:
+echo '        "import os"'
+echo '        "os.environ["CONDA_PREFIX"] = "/usr/local"'
+echo "3. IMPORTANT NOTICE: CuGraph's Louvain requires a Volta+ GPU (T4, V100).  If you get a P4 or P100 and intend to use Louvain, please FACTORY RESET your instance and try to get a compatible GPU"
+echo "4. Default stable version is now 0.$STABLE.  Nightly is now 0.$NIGHTLIES."
+echo "5. You can declare your RAPIDSAI version as a CLI option and skip the user prompts (ex: '0.$STABLE' or '0.$NIGHTLIES', between 0.$LOWEST to 0.$NIGHTLIES, without the quotes): "
 echo '        "!bash rapidsai-csp-utils/colab/rapids-colab.sh <version/label>"'
 echo "        Examples: '!bash rapidsai-csp-utils/colab/rapids-colab.sh 0.$STABLE', or '!bash rapidsai-csp-utils/colab/rapids-colab.sh stable', or '!bash rapidsai-csp-utils/colab/rapids-colab.sh s'"
 echo "                  '!bash rapidsai-csp-utils/colab/rapids-colab.sh 0.$NIGHTLIES, or '!bash rapidsai-csp-utils/colab/rapids-colab.sh nightly', or '!bash rapidsai-csp-utils/colab/rapids-colab.sh n'"
@@ -61,7 +64,7 @@ install_RAPIDS () {
             conda install -y --prefix /usr/local \
                 -c rapidsai-nightly/label/xgboost -c rapidsai-nightly -c nvidia -c conda-forge -c defaults \
                 python=3.7 cudatoolkit=$CTK_VERSION \
-                rapids=$RAPIDS_VERSION \
+                rapids-blazing=$RAPIDS_VERSION \
                 llvmlite gcsfs openssl
         elif (( $RAPIDS_RESULT == $LOWEST )) ; then
             echo "Installing RAPIDS $RAPIDS_VERSION packages from the stable release channel"
@@ -70,7 +73,7 @@ install_RAPIDS () {
             conda install -y --prefix /usr/local \
                 -c rapidsai -c nvidia -c conda-forge -c defaults \
                 python=3.7 cudatoolkit=$CTK_VERSION \
-                rapids=$RAPIDS_VERSION \
+                rapids-blazing=$RAPIDS_VERSION \
                 llvmlite gcsfs openssl
         else  # Stable packages 0.18 uses xgboost 1.3.3
             echo "Installing RAPIDS $RAPIDS_VERSION packages from the stable release channel"
@@ -79,7 +82,7 @@ install_RAPIDS () {
             conda install -y --prefix /usr/local \
                 -c rapidsai/label/main -c rapidsai -c nvidia -c conda-forge -c defaults \
                 python=3.7 cudatoolkit=$CTK_VERSION \
-                rapids=$RAPIDS_VERSION xgboost=1.3.3dev.rapidsai0.18 \
+                rapids-blazing=$RAPIDS_VERSION xgboost=1.3.3dev.rapidsai0.18 \
                 llvmlite gcsfs openssl
         fi
           
