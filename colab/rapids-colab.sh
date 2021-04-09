@@ -24,9 +24,10 @@ echo "	sys.path = sys.path[:dist_package_index] + ['/usr/local/lib/python3.7/sit
 echo "	sys.path"
 echo "	exec(open('rapidsai-csp-utils/colab/update_modules.py').read(), globals())"
 echo ""
-echo "2. BlazingSQL is now also installed with RAPIDS on Colab!  To use BlazingSQL, before you import it , you will need to export the CONDA_Prefix with this code:
-echo '        "import os"'
-echo '        "os.environ["CONDA_PREFIX"] = "/usr/local"'
+echo "2. BlazingSQL is now also installed with RAPIDS on Colab!  To use BlazingSQL, before you import it, you will need to export the `CONDA_PREFIX` with this code snippet:"
+echo '        import os'
+echo '        os.environ["CONDA_PREFIX"] = "/usr/local" '
+echo '        from blazingsql import BlazingContext '
 echo "3. IMPORTANT NOTICE: CuGraph's Louvain requires a Volta+ GPU (T4, V100).  If you get a P4 or P100 and intend to use Louvain, please FACTORY RESET your instance and try to get a compatible GPU"
 echo "4. Default stable version is now 0.$STABLE.  Nightly is now 0.$NIGHTLIES."
 echo "5. You can declare your RAPIDSAI version as a CLI option and skip the user prompts (ex: '0.$STABLE' or '0.$NIGHTLIES', between 0.$LOWEST to 0.$NIGHTLIES, without the quotes): "
