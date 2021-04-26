@@ -2,9 +2,9 @@
 
 MULT="100"
 
-STABLE=18
-NIGHTLIES=19
-LOWEST=17
+STABLE=19
+NIGHTLIES=20
+LOWEST=18
 
 CTK_VERSION=11.0
 
@@ -15,7 +15,7 @@ echo "PLEASE READ"
 echo "********************************************************************************************************"
 echo "Changes:"
 echo "1. IMPORTANT SCRIPT CHANGES: Colab has updated to Python 3.7, and now runs our STABLE and NIGHTLY versions (0.$STABLE and 0.$NIGHTLIES)!  PLEASE update your older install script code as follows:"
-echo "	!bash rapidsai-csp-utils/colab/rapids-colab.sh 0.18"
+echo "	!bash rapidsai-csp-utils/colab/rapids-colab.sh 0.$STABLE"
 echo ""
 echo "	import sys, os"
 echo ""
@@ -24,9 +24,10 @@ echo "	sys.path = sys.path[:dist_package_index] + ['/usr/local/lib/python3.7/sit
 echo "	sys.path"
 echo "	exec(open('rapidsai-csp-utils/colab/update_modules.py').read(), globals())"
 echo ""
-echo "2. IMPORTANT NOTICE: CuGraph's Louvain requires a Volta+ GPU (T4, V100).  If you get a P4 or P100 and intend to use Louvain, please FACTORY RESET your instance and try to get a compatible GPU"
-echo "3. Default stable version is now 0.$STABLE.  Nightly is now 0.$NIGHTLIES."
-echo "3. You can declare your RAPIDSAI version as a CLI option and skip the user prompts (ex: '0.$STABLE' or '0.$NIGHTLIES', between 0.$LOWEST to 0.$NIGHTLIES, without the quotes): "
+echo "2. IMPORTANT NOTICE: If you need CuGraph, please use RAPIDS 0.18 for now. "
+echo "3. IMPORTANT NOTICE: CuGraph's Louvain requires a Volta+ GPU (T4, V100).  If you get a P4 or P100 and intend to use Louvain, please FACTORY RESET your instance and try to get a compatible GPU"
+echo "4. Default stable version is now 0.$STABLE.  Nightly is now 0.$NIGHTLIES."
+echo "5. You can declare your RAPIDSAI version as a CLI option and skip the user prompts (ex: '0.$STABLE' or '0.$NIGHTLIES', between 0.$LOWEST to 0.$NIGHTLIES, without the quotes): "
 echo '        "!bash rapidsai-csp-utils/colab/rapids-colab.sh <version/label>"'
 echo "        Examples: '!bash rapidsai-csp-utils/colab/rapids-colab.sh 0.$STABLE', or '!bash rapidsai-csp-utils/colab/rapids-colab.sh stable', or '!bash rapidsai-csp-utils/colab/rapids-colab.sh s'"
 echo "                  '!bash rapidsai-csp-utils/colab/rapids-colab.sh 0.$NIGHTLIES, or '!bash rapidsai-csp-utils/colab/rapids-colab.sh nightly', or '!bash rapidsai-csp-utils/colab/rapids-colab.sh n'"
@@ -59,10 +60,17 @@ install_RAPIDS () {
         echo "Please standby, this will take a few minutes..."
         # install RAPIDS packages
             conda install -y --prefix /usr/local \
-                -c rapidsai-nightly/label/xgboost -c rapidsai-nightly -c nvidia -c conda-forge -c defaults \
-                python=3.7 cudatoolkit=$CTK_VERSION \
-                rapids=$RAPIDS_VERSION \
-                llvmlite gcsfs openssl
+              -c rapidsai-nightly -c conda-forge -c nvidia \
+              python=3.7 cudatoolkit=$CTK_VERSION \
+              cudf=$RAPIDS_VERSION \
+              dask-cudf=$RAPIDS_VERSION \
+              cuml=$RAPIDS_VERSION \
+              cugraph=$RAPIDS_VERSION \
+              cusignal=$RAPIDS_VERSION \
+              cugraph=$RAPIDS_VERSION \
+              cuspatial=$RAPIDS_VERSION \
+              xgboost \
+              llvmlite gcsfs openssl ujson pandas-gbq
         elif (( $RAPIDS_RESULT == $LOWEST )) ; then
             echo "Installing RAPIDS $RAPIDS_VERSION packages from the stable release channel"
             echo "Please standby, this will take a few minutes..."
@@ -72,19 +80,26 @@ install_RAPIDS () {
                 python=3.7 cudatoolkit=$CTK_VERSION \
                 rapids=$RAPIDS_VERSION \
                 llvmlite gcsfs openssl
-        else  # Stable packages 0.18 uses xgboost 1.3.3
+        else  # Stable packages 0.19 uses xgboost 1.3.3
             echo "Installing RAPIDS $RAPIDS_VERSION packages from the stable release channel"
             echo "Please standby, this will take a few minutes..."
             # install RAPIDS packages
             conda install -y --prefix /usr/local \
-                -c rapidsai/label/main -c rapidsai -c nvidia -c conda-forge -c defaults \
+                -c rapidsai -c conda-forge -c nvidia \
                 python=3.7 cudatoolkit=$CTK_VERSION \
-                rapids=$RAPIDS_VERSION xgboost=1.3.3dev.rapidsai0.18 \
-                llvmlite gcsfs openssl
+                cudf=$RAPIDS_VERSION \
+                dask-cudf=$RAPIDS_VERSION \
+                cuml=$RAPIDS_VERSION \
+                cugraph=$RAPIDS_VERSION \
+                cusignal=$RAPIDS_VERSION \
+                cugraph=$RAPIDS_VERSION \
+                cuspatial=$RAPIDS_VERSION \
+                xgboost \
+                llvmlite gcsfs openssl ujson pandas-gbq
         fi
           
         echo "Copying shared object files to /usr/lib"
-        # copy .so files to /usr/lib, where Colab's Python looks for libs
+        ## copy .so files to /usr/lib, where Colab's Python looks for libs
         python rapidsai-csp-utils/colab/copy_libs.py
     fi
 
