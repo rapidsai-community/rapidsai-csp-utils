@@ -89,7 +89,7 @@ install_RAPIDS () {
             echo "Please standby, this will take a few minutes..."
             # install RAPIDS packages
             conda install -y --prefix /usr/local \
-                -c rapidsai -c nvidia -c conda-forge -c defaults \
+                -c rapidsai -c nvidia -c conda-forge \
                 python=3.7 cudatoolkit=$CTK_VERSION \
                 rapids=$RAPIDS_VERSION \
                 llvmlite gcsfs openssl
