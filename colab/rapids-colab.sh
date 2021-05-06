@@ -5,6 +5,7 @@ MULT="100"
 STABLE=19
 NIGHTLIES=20
 LOWEST=18
+CUPY=8.6.0
 
 CTK_VERSION=11.0
 
@@ -51,6 +52,7 @@ echo "For a near instant entry into a RAPIDS Library experience, or if we haven'
 install_RAPIDS () {
     echo "Checking for GPU type:"
     python rapidsai-csp-utils/colab/env-check.py
+    pip install cupy-cuda110==$CUPY
 
     if [ ! -f Miniconda3-4.5.4-Linux-x86_64.sh ]; then
         echo "Removing conflicting packages, will replace with RAPIDS compatible versions"
@@ -59,9 +61,9 @@ install_RAPIDS () {
 
         # intall miniconda
         echo "Installing conda"
-        wget -nc https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-        chmod +x Miniconda3-latest-Linux-x86_64.sh
-        bash ./Miniconda3-latest-Linux-x86_64.sh -b -f -p /usr/local
+        wget -nc https://repo.anaconda.com/miniconda/Miniconda3-py37_4.9.2-Linux-x86_64.sh
+        chmod +x Miniconda3-py37_4.9.2-Linux-x86_64.sh
+        bash ./Miniconda3-py37_4.9.2-Linux-x86_64.sh -b -f -p /usr/local
 
         # pin python3.7
         echo "python 3.7.*" > /usr/local/conda-meta/pinned
@@ -113,7 +115,7 @@ install_RAPIDS () {
           
         echo "Copying shared object files to /usr/lib"
         ## copy .so files to /usr/lib, where Colab's Python looks for libs
-        # python rapidsai-csp-utils/colab/copy_libs.py
+        python rapidsai-csp-utils/colab/copy_libs.py
     fi
 
     echo ""
@@ -127,10 +129,14 @@ rapids_version_check () {
   if  [ $RESPONSE == "NIGHTLY" ]|| [ $RESPONSE == "nightly" ]  || [ $RESPONSE == "N" ] || [ $RESPONSE == "n" ] ; then
     RAPIDS_VERSION="0.$NIGHTLIES"
     RAPIDS_RESULT=$NIGHTLIES
+    CUPY=9.0.0
+    echo "cupy install is $CUPY"
     echo "Starting to prep Colab for install RAPIDS Version $RAPIDS_VERSION nightly"
   elif [ $RESPONSE == "STABLE" ]|| [ $RESPONSE == "stable" ]  || [ $RESPONSE == "S" ] || [ $RESPONSE == "s" ] ; then
     RAPIDS_VERSION="0.$STABLE"
     RAPIDS_RESULT=$STABLE
+    CUPY=8.6.0
+    echo "cupy install is $CUPY"
     echo "Starting to prep Colab for install RAPIDS Version $RAPIDS_VERSION stable"
   else
     RAPIDS_RESULT=$(awk '{print $1*$2}' <<<"${RESPONSE} ${MULT}")
@@ -142,6 +148,8 @@ rapids_version_check () {
       RAPIDS_VERSION="0.$LOWEST"
       RAPIDS_RESULT=$LOWEST
       echo "RAPIDS Version modified to $RAPIDS_VERSION stable"
+      CUPY=8.0.0
+      echo "cupy install is $CUPY"
     elif (($RAPIDS_RESULT >= $LOWEST)) &&  (( $RAPIDS_RESULT <= $NIGHTLIES )) ; then
       RAPIDS_VERSION="0.$RAPIDS_RESULT"
       echo "RAPIDS Version to install is $RAPIDS_VERSION"
