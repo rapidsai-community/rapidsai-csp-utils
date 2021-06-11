@@ -5,17 +5,18 @@ from pathlib import Path
 
 pkg = "rapids-blazing"
 if(sys.argv[1] == "nightly"):
-  verion =  ["rapidsai-nightly", "21.08"]
-  print("Installing RAPIDS Nightly "+install[1])
+  release =  ["rapidsai-nightly", "21.08"]
+  print("Installing RAPIDS Nightly "+release[1])
 else:
-  verion = ["rapidsai", "21.06"]
-  print("Installing RAPIDS Stable "+install[1])
-
-if(sys.argv[2] == "core"):
-  pkg = "rapids"
-
-print("Starting the RAPIDS install on Colab.  This will take about 15 minutes.")
-output = subprocess.Popen(["conda install -y --prefix /usr/local -c "+verion[0]+" -c nvidia -c conda-forge python=3.7 cudatoolkit=11.0 "+pkg+"="+verion[1]+" llvmlite gcsfs openssl"], shell=True, stderr=subprocess.STDOUT, 
+  release = ["rapidsai", "21.06"]
+  print("Installing RAPIDS Stable "+release[1])
+try:
+  if(sys.argv[2] == "core"):
+    pkg = "rapids"
+    print("Starting the RAPIDS install on Colab.  This will take about 15 minutes.")
+except:
+  print("Starting the RAPIDS+BlazingSQL install on Colab.  This will take about 15 minutes.")
+output = subprocess.Popen(["conda install -y --prefix /usr/local -c "+release[0]+" -c nvidia -c conda-forge python=3.7 cudatoolkit=11.0 "+pkg+"="+release[1]+" llvmlite gcsfs openssl"], shell=True, stderr=subprocess.STDOUT, 
     stdout=subprocess.PIPE)
 stdout, _ = output.communicate()
 print(stdout)
