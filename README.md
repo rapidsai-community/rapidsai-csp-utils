@@ -1,6 +1,7 @@
 # rapidsai-csp-utils
 
 Colab folder contains
-- rapids-colab.sh: main bash script to properly install RAPIDS onto a colab GPU instance.  This script will download all the other files in the folder.
+- update_gcc.sh: This updates Colab's gcc version form 7.4.0 to a RAPIDS compatible 9.3.0
+- install_rapids.py: main bash script to properly install RAPIDS onto a Colab GPU instance.  This script will conda install RAPIDS.
 - env-check.py: python script to check whether or not your GPU can run RAPIDS
-- update-pyarrow.py: python script that updates pyarrow on colab to a RAPIDS v0.11+ compatible version
+- rapids-colab.sh: this now just displays the new template and instructions for users running the previous install method

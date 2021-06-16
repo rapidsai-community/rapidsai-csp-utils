@@ -5,10 +5,10 @@ from pathlib import Path
 
 pkg = "rapids-blazing"
 if(sys.argv[1] == "nightly"):
-  release =  ["rapidsai-nightly", "21.06"]
+  release =  ["rapidsai-nightly", "21.08"]
   print("Installing RAPIDS Nightly "+release[1])
 else:
-  release = ["rapidsai", "0.19"]
+  release = ["rapidsai", "21.06"]
   print("Installing RAPIDS Stable "+release[1])
 try:
   if(sys.argv[2] == "core"):
