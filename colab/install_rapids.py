@@ -5,10 +5,10 @@ from pathlib import Path
 
 pkg = "rapids"
 if(sys.argv[1] == "nightly"):
-  release =  ["rapidsai-nightly", "21.10"]
+  release =  ["rapidsai-nightly", "21.12"]
   print("Installing RAPIDS Nightly "+release[1])
 else:
-  release = ["rapidsai", "21.08"]
+  release = ["rapidsai", "21.10"]
   print("Installing RAPIDS Stable "+release[1])
 
 pkg = "rapids"
