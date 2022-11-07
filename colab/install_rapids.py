@@ -18,7 +18,7 @@ for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
     break
   else:
     print(line.rstrip())
-output = subprocess.Popen(["pip install cffi==1.15.0"], shell=True, stderr=subprocess.STDOUT, 
+output = subprocess.Popen(["pip install cffi==1.15.1"], shell=True, stderr=subprocess.STDOUT, 
     stdout=subprocess.PIPE)
 for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
   if(line == ""):
