@@ -58,7 +58,11 @@ if ('K80' not in gpu_name):
   print("""
           ***********************************************************************
           With the new pip install complete, please do not run any further installation 
-          commands from the conda based installation methods!!!
+          commands from the conda based installation methods!!!  
+          
+          In your personal files, you can delete these cells.  
+          
+          RAPIDSAI owned templates/notebooks should already be updated with no action needed.
           ***********************************************************************
           """
        )
