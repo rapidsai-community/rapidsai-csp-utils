@@ -1,5 +1,18 @@
-import pynvml
-import os
+import os, sys, io
+import subprocess
+from pathlib import Path
+
+try: 
+  import pynvml
+except:
+  output = subprocess.Popen(["pip install pynvml"], shell=True, stderr=subprocess.STDOUT, 
+      stdout=subprocess.PIPE)
+  for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
+    if(line == ""):
+      break
+    else:
+      print(line.rstrip())
+  import pynvml
 try:
   pynvml.nvmlInit()
 except:
@@ -15,8 +28,40 @@ gpu_name = pynvml.nvmlDeviceGetName(pynvml.nvmlDeviceGetHandleByIndex(0)).decode
 if ('K80' not in gpu_name):
   print('***********************************************************************')
   print('Woo! Your instance has the right kind of GPU, a '+ str(gpu_name)+'!')
+  print('We will now install RAPIDS via pip!  Please stand by, should be quick...')
   print('***********************************************************************')
   print()
+
+
+  # Install RAPIDS -- we're doing this in one file, for now, due to ease of use
+  output = subprocess.Popen(["pip install cudf-cu11 --extra-index-url=https://pypi.ngc.nvidia.com"], shell=True, stderr=subprocess.STDOUT, 
+      stdout=subprocess.PIPE)
+  for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
+    if(line == ""):
+      break
+    else:
+      print(line.rstrip())
+  output = subprocess.Popen(["rm -rf /usr/local/lib/python3.8/dist-packages/cupy*"], shell=True, stderr=subprocess.STDOUT, 
+      stdout=subprocess.PIPE)
+  for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
+    if(line == ""):
+      break
+    else:
+      print(line.rstrip())
+  output = subprocess.Popen(["pip install cupy-cuda11x"], shell=True, stderr=subprocess.STDOUT, 
+      stdout=subprocess.PIPE)
+  for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
+    if(line == ""):
+      break
+    else:
+      print(line.rstrip())
+  print("""
+          ***********************************************************************
+          With the new pip install complete, please do not run any further installation 
+          commands from the conda based installation methods!!!
+          ***********************************************************************
+          """
+       )
 else:
   raise Exception("""
                   Unfortunately Colab didn't give you a RAPIDS compatible GPU (P4, P100, T4, or V100), but gave you a """+ gpu_name +""".
