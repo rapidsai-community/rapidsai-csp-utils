@@ -28,13 +28,13 @@ gpu_name = pynvml.nvmlDeviceGetName(pynvml.nvmlDeviceGetHandleByIndex(0))
 if ('K80' not in gpu_name):
   print('***********************************************************************')
   print('Woo! Your instance has the right kind of GPU, a '+ str(gpu_name)+'!')
-  print('We will now install RAPIDS via pip!  Please stand by, should be quick...')
+  print('We will now install RAPIDS 22.12 via pip!  Please stand by, should be quick...')
   print('***********************************************************************')
   print()
 
 
   # Install RAPIDS -- we're doing this in one file, for now, due to ease of use
-  output = subprocess.Popen(["pip install cudf-cu11 cuml-cu11 cugraph-cu11 --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT, 
+  output = subprocess.Popen(["pip install cudf-cu11==22.12 cuml-cu11==22.12 cugraph-cu11==22.12 --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT, 
       stdout=subprocess.PIPE)
   for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
     if(line == ""):
