@@ -28,13 +28,14 @@ gpu_name = pynvml.nvmlDeviceGetName(pynvml.nvmlDeviceGetHandleByIndex(0))
 if ('K80' not in gpu_name):
   print('***********************************************************************')
   print('Woo! Your instance has the right kind of GPU, a '+ str(gpu_name)+'!')
-  print('We will now install RAPIDS 22.12 via pip!  Please stand by, should be quick...')
+  print('We will now install RAPIDS cuDF, cuML, and cuGraph via pip! ')
+  print('Please stand by, should be quick...')
   print('***********************************************************************')
   print()
 
 
   # Install RAPIDS -- we're doing this in one file, for now, due to ease of use
-  output = subprocess.Popen(["pip install cudf-cu11==22.12 cuml-cu11==22.12 cugraph-cu11==22.12 rmm-cu11==22.12 raft_dask_cu11==22.12 pylibraft-cu11==22.12 pylibcugraph-cu11==22.12 dask-cudf-cu11==22.12 ucx_py_cu11==0.29 aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT, 
+  output = subprocess.Popen(["pip install cudf-cu11 cuml-cu11 cugraph-cu11 aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT, 
       stdout=subprocess.PIPE)
   for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
     if(line == ""):
@@ -57,12 +58,15 @@ if ('K80' not in gpu_name):
       print(line.rstrip())
   print("""
           ***********************************************************************
-          With the new pip install complete, please do not run any further installation 
-          commands from the conda based installation methods!!!  
+          The pip install of RAPIDS is complete.
           
-          In your personal files, you can delete these cells.  
+          Please do not run any further installation from the conda based installation methods, as they may cause issues!  
           
-          RAPIDSAI owned templates/notebooks should already be updated with no action needed.
+          Please ensure that you're pulling from the git repo to remain updated with the latest working install scripts. 
+r          
+          Troubleshooting:
+             - If there is an installation failure, please check back on RAPIDSAI owned templates/notebooks to see how to update your personal files. 
+             - If an installation failure persists when using the latest script, please make an issue on https://github.com/rapidsai-community/rapidsai-csp-utils
           ***********************************************************************
           """
        )
