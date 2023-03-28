@@ -38,7 +38,7 @@ else:
 pkg = "rapids"
 print("Starting the RAPIDS install on Colab.  This will take about 15 minutes.")
 
-output = subprocess.Popen(["conda install -y --prefix /usr/local -c "+release[0]+" -c nvidia -c conda-forge python=3.8 cudatoolkit=11.2 "+pkg+"="+release[1]+" llvmlite gcsfs openssl dask-sql"], shell=True, stderr=subprocess.STDOUT, 
+output = subprocess.Popen(["conda install -y --prefix /usr/local -c "+release[0]+" -c nvidia -c conda-forge python=3.9 cudatoolkit=11.2 "+pkg+"="+release[1]+" llvmlite gcsfs openssl dask-sql"], shell=True, stderr=subprocess.STDOUT, 
     stdout=subprocess.PIPE)
 for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
   if(line == ""):
@@ -46,9 +46,19 @@ for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
   else:
     print(line.rstrip())
 
+# Uninstall unneeded cupy package that will cause errors
+output = subprocess.Popen(["conda uninstall cupy"], shell=True, stderr=subprocess.STDOUT, 
+    stdout=subprocess.PIPE)
+for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
+  if(line == ""):
+    break
+  else:
+    print(line.rstrip())
+
+
 print("RAPIDS conda installation complete.  Updating Colab's libraries...")
 import sys, os, shutil
-sys.path.append('/usr/local/lib/python3.8/site-packages/')
+sys.path.append('/usr/local/lib/python3.9/site-packages/')
 os.environ['NUMBAPRO_NVVM'] = '/usr/local/cuda/nvvm/lib64/libnvvm.so'
 os.environ['NUMBAPRO_LIBDEVICE'] = '/usr/local/cuda/nvvm/libdevice/'
 
