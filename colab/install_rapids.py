@@ -46,15 +46,6 @@ for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
   else:
     print(line.rstrip())
 
-# Uninstall unneeded cupy package that will cause errors
-output = subprocess.Popen(["conda uninstall cupy"], shell=True, stderr=subprocess.STDOUT, 
-    stdout=subprocess.PIPE)
-for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
-  if(line == ""):
-    break
-  else:
-    print(line.rstrip())
-
 
 print("RAPIDS conda installation complete.  Updating Colab's libraries...")
 import sys, os, shutil
