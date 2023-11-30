@@ -35,7 +35,7 @@ if ('K80' not in gpu_name):
 
 
   # Install RAPIDS -- we're doing this in one file, for now, due to ease of use
-  output = subprocess.Popen(["pip install cudf-cu11 cuml-cu11 cugraph-cu11 aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT, 
+  output = subprocess.Popen(["pip install cudf-cu11 cuml-cu11 cugraph-cu11 cuspatial-cu11 cuproj-cu11 cuxfilter-cu11 cucim pylibraft-cu11 raft-dask-cu11 aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT, 
       stdout=subprocess.PIPE)
   for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
     if(line == ""):
