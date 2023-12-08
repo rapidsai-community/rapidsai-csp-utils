@@ -43,4 +43,3 @@ echo ""
 echo "********************************************************************************************************"
 echo ""
 echo "Enjoy using RAPIDS!  If you have any issues with or suggestions for RAPIDSAI on Colab, please create a issue on https://github.com/rapidsai/rapidsai-csp-utils/issues/new."
-
