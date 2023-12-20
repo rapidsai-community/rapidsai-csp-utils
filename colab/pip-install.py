@@ -2,6 +2,11 @@ import os, sys, io
 import subprocess
 from pathlib import Path
 
+print('***********************************************************************')
+print('We will now install RAPIDS via pip! ')
+print('Please stand by, should be quick...')
+print('***********************************************************************')
+print()
 # Install RAPIDS -- we're doing this in one file, for now, due to ease of use
 rapids_version = "23.12.*"
 output = subprocess.Popen([f"pip install cudf-cu12=={rapids_version} cuml-cu12=={rapids_version} cugraph-cu12=={rapids_version} cuspatial-cu12=={rapids_version} cuproj-cu12=={rapids_version} cuxfilter-cu12=={rapids_version} cucim-cu12=={rapids_version} pylibraft-cu12=={rapids_version} raft-dask-cu12=={rapids_version} aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT, 
