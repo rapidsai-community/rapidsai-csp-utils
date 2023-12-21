@@ -25,14 +25,21 @@ for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
     break
   else:
     print(line.rstrip())
+output = subprocess.Popen(["sed -i '/cudatoolkit/d' '/usr/local/conda-meta/pinned'"], shell=True, stderr=subprocess.STDOUT,
+    stdout=subprocess.PIPE)
+for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
+  if(line == ""):
+    break
+  else:
+    print(line.rstrip())
 
 # Install RAPIDS
 pkg = "rapids"
 if(sys.argv[1] == "nightly"):
-  release =  ["rapidsai-nightly", "23.12"]
+  release =  ["rapidsai-nightly", "24.02"]
   print("Installing RAPIDS Nightly "+release[1])
 else:
-  release = ["rapidsai", "23.10"]
+  release = ["rapidsai", "23.12"]
   print("Installing RAPIDS Stable "+release[1])
 
 pkg = "rapids"
@@ -46,7 +53,7 @@ for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
   else:
     print(line.rstrip())
 
-output = subprocess.Popen(["mamba install -y --prefix /usr/local -c "+release[0]+" -c nvidia -c conda-forge python=3.10 cudatoolkit=11.8 "+pkg+"="+release[1]+" llvmlite gcsfs openssl dask-sql"], shell=True, stderr=subprocess.STDOUT, 
+output = subprocess.Popen(["mamba install -y --prefix /usr/local -c "+release[0]+" -c nvidia -c conda-forge python=3.10 cuda-version=12.0 "+pkg+"="+release[1]+" llvmlite gcsfs openssl dask-sql"], shell=True, stderr=subprocess.STDOUT, 
     stdout=subprocess.PIPE)
 for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
   if(line == ""):
