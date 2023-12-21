@@ -25,6 +25,13 @@ for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
     break
   else:
     print(line.rstrip())
+output = subprocess.Popen(["sed -i '/cudatoolkit/d' '/usr/local/conda-meta/pinned'"], shell=True, stderr=subprocess.STDOUT,
+    stdout=subprocess.PIPE)
+for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
+  if(line == ""):
+    break
+  else:
+    print(line.rstrip())
 
 # Install RAPIDS
 pkg = "rapids"
