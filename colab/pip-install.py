@@ -25,7 +25,7 @@ except:
                   Go to 'Runtime -> Change Runtime Type --> under the Hardware Accelerator, select GPU', then try again."""
   )
 gpu_name = pynvml.nvmlDeviceGetName(pynvml.nvmlDeviceGetHandleByIndex(0))
-rapids_version = "24.02.*"
+rapids_version = "24.2.*"
 
 if ('P' not in gpu_name):
   print('***********************************************************************')
