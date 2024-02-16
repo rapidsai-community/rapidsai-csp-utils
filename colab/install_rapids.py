@@ -63,7 +63,7 @@ if ('P' not in gpu_name): # Currently supported GPU
       release =  ["rapidsai-nightly", "24.04"]
       print("Installing RAPIDS Nightly "+release[1])
     else:
-      release = ["rapidsai", "24.02"]
+      release = ["rapidsai", "23.12"]
       print("Installing RAPIDS Stable "+release[1])
 else: # Pascal GPU Installation options (Not currently supported)
   release =  ["rapidsai", "23.12"]
