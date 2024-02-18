@@ -96,7 +96,7 @@ os.environ['NUMBAPRO_NVVM'] = '/usr/local/cuda/nvvm/lib64/libnvvm.so'
 os.environ['NUMBAPRO_LIBDEVICE'] = '/usr/local/cuda/nvvm/libdevice/'
 
 os.environ["CONDA_PREFIX"] = "/usr/local"
-for so in ['cudf', 'rmm', 'nccl', 'cuml', 'cugraph', 'xgboost', 'cuspatial', 'cupy', 'geos','geos_c']:
+for so in ['cudf', 'rmm', 'nccl', 'cuml', 'cugraph', 'xgboost', 'treelite', 'cuspatial', 'cupy', 'geos','geos_c']:
   fn = 'lib'+so+'.so'
   source_fn = '/usr/local/lib/'+fn
   dest_fn = '/usr/lib/'+fn
