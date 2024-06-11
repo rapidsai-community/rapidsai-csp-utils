@@ -25,7 +25,7 @@ except:
                   Go to 'Runtime -> Change Runtime Type --> under the Hardware Accelerator, select GPU', then try again."""
   )
 gpu_name = pynvml.nvmlDeviceGetName(pynvml.nvmlDeviceGetHandleByIndex(0))
-rapids_version = "24.4.*"
+rapids_version = "24.6.*"
 
 if ('P' not in gpu_name):
   print('***********************************************************************')
@@ -42,7 +42,7 @@ else:
   rapids_version = "23.12.*"
 
 
-output = subprocess.Popen([f"pip install cuml-cu12=={rapids_version} cugraph-cu12=={rapids_version} cuspatial-cu12=={rapids_version} cuproj-cu12=={rapids_version} cuxfilter-cu12=={rapids_version} cucim-cu12=={rapids_version} pylibraft-cu12=={rapids_version} raft-dask-cu12=={rapids_version} aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT, 
+output = subprocess.Popen([f"pip install cudf-cu12=={rapids_version} cuml-cu12=={rapids_version} cugraph-cu12=={rapids_version} cuspatial-cu12=={rapids_version} cuproj-cu12=={rapids_version} cuxfilter-cu12=={rapids_version} cucim-cu12=={rapids_version} pylibraft-cu12=={rapids_version} raft-dask-cu12=={rapids_version} aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT, 
     stdout=subprocess.PIPE)
 for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
   if(line == ""):
