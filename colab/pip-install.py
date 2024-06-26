@@ -25,25 +25,29 @@ except:
                   Go to 'Runtime -> Change Runtime Type --> under the Hardware Accelerator, select GPU', then try again."""
   )
 gpu_name = pynvml.nvmlDeviceGetName(pynvml.nvmlDeviceGetHandleByIndex(0))
-rapids_version = "24.6.*"
 
-if ('P' not in gpu_name):
-  print('***********************************************************************')
-  print('Woo! Your instance has a '+ str(gpu_name)+' GPU!')
-  print(f'We will install the latest stable RAPIDS via pip {rapids_version}!  Please stand by, should be quick...')
-  print('***********************************************************************')
-  print()
-else:
-  print('***********************************************************************')
-  print('Hey! Your instance has a Pascal GPU, a '+ str(gpu_name)+'!')
-  print('We will install a compatible RAPIDS via pip (23.12)!  Please stand by, should be quick...')
-  print('***********************************************************************')
-  print()
-  rapids_version = "23.12.*"
-
-
-output = subprocess.Popen([f"pip install cudf-cu12=={rapids_version} cuml-cu12=={rapids_version} cugraph-cu12=={rapids_version} cuspatial-cu12=={rapids_version} cuproj-cu12=={rapids_version} cuxfilter-cu12=={rapids_version} cucim-cu12=={rapids_version} pylibraft-cu12=={rapids_version} raft-dask-cu12=={rapids_version} aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT, 
+if(len(sys.argv)==1):
+  rapids_version = "24.4.*"
+  print("Installing the rest of the RAPIDS " + rapids_version + " libraries")
+  output = subprocess.Popen([f"pip install cudf-cu12=={rapids_version} cuml-cu12=={rapids_version} cugraph-cu12=={rapids_version} cuspatial-cu12=={rapids_version} cuproj-cu12=={rapids_version} cuxfilter-cu12=={rapids_version} cucim-cu12=={rapids_version} pylibraft-cu12=={rapids_version} raft-dask-cu12=={rapids_version} aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT, 
     stdout=subprocess.PIPE)
+elif(sys.argv[1] == "latest"):
+  rapids_version = "24.6.*"
+  print("Installing RAPIDS Stable " + rapids_version)
+  output = subprocess.Popen([f"pip install cudf-cu12=={rapids_version} cuml-cu12=={rapids_version} cugraph-cu12=={rapids_version} cuspatial-cu12=={rapids_version} cuproj-cu12=={rapids_version} cuxfilter-cu12=={rapids_version} cucim-cu12=={rapids_version} pylibraft-cu12=={rapids_version} raft-dask-cu12=={rapids_version} aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT, 
+    stdout=subprocess.PIPE)
+elif(sys.argv[1] == "nightlies"):
+  rapids_version = "24.8.*"
+  print("Installing RAPIDS " + rapids_version)
+  rapids_version = "24.08"
+  output = subprocess.Popen([f'pip install "cudf-cu12>={rapids_version}.0a0,<=24.8" "cuml-cu12>={rapids_version}.0a0,<=24.8" "cugraph-cu12>={rapids_version}.0a0,<=24.8" "cuspatial-cu12>={rapids_version}.0a0,<=24.8" "cuproj-cu12>={rapids_version}.0a0,<=24.8" "cuxfilter-cu12>={rapids_version}.0a0,<=24.8" "cucim-cu12>={rapids_version}.0a0,<=24.8" "pylibraft-cu12>={rapids_version}.0a0,<=24.8" "raft-dask-cu12>={rapids_version}.0a0,<=24.8" aiohttp --extra-index-url=https://pypi.anaconda.org/rapidsai-wheels-nightly/simple'], shell=True, stderr=subprocess.STDOUT, 
+    stdout=subprocess.PIPE)
+else:
+  rapids_version = "24.4.*"
+  print("Installing RAPIDS remaining " + rapids_version + " libraries")
+  output = subprocess.Popen([f"pip install cudf-cu12=={rapids_version} cuml-cu12=={rapids_version} cugraph-cu12=={rapids_version} cuspatial-cu12=={rapids_version} cuproj-cu12=={rapids_version} cuxfilter-cu12=={rapids_version} cucim-cu12=={rapids_version} pylibraft-cu12=={rapids_version} raft-dask-cu12=={rapids_version} aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT, 
+    stdout=subprocess.PIPE)
+  
 for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
   if(line == ""):
     break
