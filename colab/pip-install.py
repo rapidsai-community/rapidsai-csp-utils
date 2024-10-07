@@ -26,6 +26,9 @@ except:
   )
 gpu_name = pynvml.nvmlDeviceGetName(pynvml.nvmlDeviceGetHandleByIndex(0))
 
+LATEST_RAPIDS_VERSION = "24.8"
+NIGHTLY_RAPIDS_VERSION = "24.10"
+
 if(len(sys.argv)>=2):
   if(len(sys.argv[1])=="legacy"):
     rapids_version = "24.6.*"
@@ -33,15 +36,12 @@ if(len(sys.argv)>=2):
     output = subprocess.Popen([f"pip install cudf-cu12=={rapids_version} cuml-cu12=={rapids_version} cugraph-cu12=={rapids_version} cuspatial-cu12=={rapids_version} cuproj-cu12=={rapids_version} cuxfilter-cu12=={rapids_version} cucim-cu12=={rapids_version} pylibraft-cu12=={rapids_version} raft-dask-cu12=={rapids_version} nx-cugraph-cu12=={rapids_version} aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT, 
       stdout=subprocess.PIPE)
   elif(sys.argv[1] == "latest"):
-    rapids_version = "24.8.*"
-    print("Installing RAPIDS Stable " + rapids_version)
-    output = subprocess.Popen([f"pip install cudf-cu12=={rapids_version} cuml-cu12=={rapids_version} cugraph-cu12=={rapids_version} cuspatial-cu12=={rapids_version} cuproj-cu12=={rapids_version} cuxfilter-cu12=={rapids_version} cucim-cu12=={rapids_version} pylibraft-cu12=={rapids_version} raft-dask-cu12=={rapids_version} nx-cugraph-cu12=={rapids_version} aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT, 
+    print(f"Installing RAPIDS Stable {LATEST_RAPIDS_VERSION}.*")
+    output = subprocess.Popen([f"pip install cudf-cu12=={LATEST_RAPIDS_VERSION}.* cuml-cu12=={LATEST_RAPIDS_VERSION}.* cugraph-cu12=={LATEST_RAPIDS_VERSION}.* cuspatial-cu12=={rapids_version} cuproj-cu12=={rapids_version} cuxfilter-cu12=={rapids_version} cucim-cu12=={rapids_version} pylibraft-cu12=={rapids_version} raft-dask-cu12=={LATEST_RAPIDS_VERSION}.* nx-cugraph-cu12=={LATEST_RAPIDS_VERSION}.* aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT, 
       stdout=subprocess.PIPE)
   elif(sys.argv[1] == "nightlies"):
-    rapids_version = "24.10.*"
-    print("Installing RAPIDS " + rapids_version)
-    rapids_version = "24.10"
-    output = subprocess.Popen([f'pip install "cudf-cu12>={rapids_version}.0a0,<=24.8" "cuml-cu12>={rapids_version}.0a0,<=24.8" "cugraph-cu12>={rapids_version}.0a0,<=24.8" "cuspatial-cu12>={rapids_version}.0a0,<=24.8" "cuproj-cu12>={rapids_version}.0a0,<=24.8" "cuxfilter-cu12>={rapids_version}.0a0,<=24.8" "cucim-cu12>={rapids_version}.0a0,<=24.8" "pylibraft-cu12>={rapids_version}.0a0,<=24.8" "raft-dask-cu12>={rapids_version}.0a0,<=24.8" "nx-cugraph-cu12>={rapids_version}.0a0,<=24.8" aiohttp --extra-index-url=https://pypi.anaconda.org/rapidsai-wheels-nightly/simple'], shell=True, stderr=subprocess.STDOUT, 
+    print(f"Installing RAPIDS {NIGHTLY_RAPIDS_VERSION}.*")
+    output = subprocess.Popen([f'pip install "cudf-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cuml-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cugraph-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cuspatial-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cuproj-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cuxfilter-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cucim-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "pylibraft-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a" "raft-dask-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "nx-cugraph-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" aiohttp --extra-index-url=https://pypi.anaconda.org/rapidsai-wheels-nightly/simple'], shell=True, stderr=subprocess.STDOUT, 
       stdout=subprocess.PIPE)
   else:
     rapids_version = "24.8.*"
