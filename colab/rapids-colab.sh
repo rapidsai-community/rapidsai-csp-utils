@@ -1,3 +1,5 @@
+#!/bin/sh
+
 echo "PLEASE READ FOR 21.06"
 echo "********************************************************************************************************"
 echo "Another release, another script change.  We had to revise the script, which now:"
@@ -43,4 +45,3 @@ echo ""
 echo "********************************************************************************************************"
 echo ""
 echo "Enjoy using RAPIDS!  If you have any issues with or suggestions for RAPIDSAI on Colab, please create a issue on https://github.com/rapidsai/rapidsai-csp-utils/issues/new."
-

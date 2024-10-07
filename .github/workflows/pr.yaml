@@ -1,0 +1,13 @@
+name: pr
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    name: "pre-commit hooks"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pre-commit/action@v3.0.1
