@@ -28,7 +28,7 @@ gpu_name = pynvml.nvmlDeviceGetName(pynvml.nvmlDeviceGetHandleByIndex(0))
 if ('K80' not in gpu_name):
   print('***********************************************************************')
   print('Woo! Your instance has the right kind of GPU, a '+ str(gpu_name)+'!')
-  print('We will now install RAPIDS via pip!  Please stand by, should be quick...')
+  print('We will now install RAPIDS!  Please stand by, should be quick...')
   print('***********************************************************************')
   print()
 else:
