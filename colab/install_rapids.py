@@ -3,10 +3,10 @@ import os, sys, io
 import subprocess
 from pathlib import Path
 
-try: 
+try:
   import pynvml
 except:
-  output = subprocess.Popen(["pip install pynvml"], shell=True, stderr=subprocess.STDOUT, 
+  output = subprocess.Popen(["pip install pynvml"], shell=True, stderr=subprocess.STDOUT,
       stdout=subprocess.PIPE)
   for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
     if(line == ""):
@@ -21,27 +21,27 @@ except:
                   Unfortunately you're in a Colab instance that doesn't have a GPU.
 
                   Please make sure you've configured Colab to request a GPU Instance Type.
-               
+
                   Go to 'Runtime -> Change Runtime Type --> under the Hardware Accelerator, select GPU', then try again."""
   )
 gpu_name = pynvml.nvmlDeviceGetName(pynvml.nvmlDeviceGetHandleByIndex(0))
 
-# CFFI fix with pip 
-output = subprocess.Popen(["pip uninstall --yes cffi"], shell=True, stderr=subprocess.STDOUT, 
+# CFFI fix with pip
+output = subprocess.Popen(["pip uninstall --yes cffi"], shell=True, stderr=subprocess.STDOUT,
     stdout=subprocess.PIPE)
 for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
   if(line == ""):
     break
   else:
     print(line.rstrip())
-output = subprocess.Popen(["pip uninstall --yes cryptography"], shell=True, stderr=subprocess.STDOUT, 
+output = subprocess.Popen(["pip uninstall --yes cryptography"], shell=True, stderr=subprocess.STDOUT,
     stdout=subprocess.PIPE)
 for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
   if(line == ""):
     break
   else:
     print(line.rstrip())
-output = subprocess.Popen(["pip install cffi==1.15.0"], shell=True, stderr=subprocess.STDOUT, 
+output = subprocess.Popen(["pip install cffi==1.15.0"], shell=True, stderr=subprocess.STDOUT,
     stdout=subprocess.PIPE)
 for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
   if(line == ""):
@@ -72,7 +72,7 @@ else: # Pascal GPU Installation options (Not currently supported)
 pkg = "rapids"
 print("Starting the RAPIDS install on Colab.  This will take about 15 minutes.")
 
-output = subprocess.Popen(["conda install -y --prefix /usr/local -c conda-forge mamba"], shell=True, stderr=subprocess.STDOUT, 
+output = subprocess.Popen(["conda install -y --prefix /usr/local -c conda-forge mamba"], shell=True, stderr=subprocess.STDOUT,
     stdout=subprocess.PIPE)
 for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
   if(line == ""):
@@ -80,7 +80,7 @@ for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
   else:
     print(line.rstrip())
 
-output = subprocess.Popen(["mamba install -y --prefix /usr/local -c "+release[0]+" -c conda-forge -c nvidia python=3.10 cuda-version=12.0 "+pkg+"="+release[1]+" llvmlite gcsfs openssl dask-sql"], shell=True, stderr=subprocess.STDOUT, 
+output = subprocess.Popen(["mamba install -y --prefix /usr/local -c "+release[0]+" -c conda-forge -c nvidia python=3.10 cuda-version=12.0 "+pkg+"="+release[1]+" llvmlite gcsfs openssl dask-sql"], shell=True, stderr=subprocess.STDOUT,
     stdout=subprocess.PIPE)
 for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
   if(line == ""):
