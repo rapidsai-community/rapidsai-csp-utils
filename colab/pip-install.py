@@ -26,12 +26,12 @@ except:
   )
 gpu_name = pynvml.nvmlDeviceGetName(pynvml.nvmlDeviceGetHandleByIndex(0))
 
-LATEST_RAPIDS_VERSION = "24.10"
-NIGHTLY_RAPIDS_VERSION = "24.12"
+LATEST_RAPIDS_VERSION = "24.12"
+NIGHTLY_RAPIDS_VERSION = "25.02"
 
 if(len(sys.argv)>=2):
   if(len(sys.argv[1])=="legacy"):
-    rapids_version = "24.8.*"
+    rapids_version = "24.10.*"
     print("Installing the rest of the RAPIDS " + rapids_version + " libraries")
     output = subprocess.Popen([f"pip install cudf-cu12=={rapids_version} cuml-cu12=={rapids_version} cugraph-cu12=={rapids_version} cuspatial-cu12=={rapids_version} cuproj-cu12=={rapids_version} cuxfilter-cu12=={rapids_version} cucim-cu12=={rapids_version} pylibraft-cu12=={rapids_version} raft-dask-cu12=={rapids_version} nx-cugraph-cu12=={rapids_version} aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT,
       stdout=subprocess.PIPE)
