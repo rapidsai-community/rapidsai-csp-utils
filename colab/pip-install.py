@@ -26,9 +26,9 @@ except:
   )
 gpu_name = pynvml.nvmlDeviceGetName(pynvml.nvmlDeviceGetHandleByIndex(0))
 
-LATEST_RAPIDS_VERSION = "25.04"
-NIGHTLY_RAPIDS_VERSION = "25.06"
-LEGACY_RAPIDS_VERSION = "25.02"
+LATEST_RAPIDS_VERSION = "25.06"
+NIGHTLY_RAPIDS_VERSION = "25.08"
+LEGACY_RAPIDS_VERSION = "25.04"
 
 if(len(sys.argv)>=2):
   if(len(sys.argv[1])=="legacy"):
