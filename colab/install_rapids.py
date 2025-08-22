@@ -60,10 +60,10 @@ for line in io.TextIOWrapper(output.stdout, encoding="utf-8"):
 pkg = "rapids"
 if ('P' not in gpu_name): # Currently supported GPU
     if(sys.argv[1] == "nightly"):
-      release =  ["rapidsai-nightly", "24.04"]
+      release =  ["rapidsai-nightly", "24.06"]
       print("Installing RAPIDS Nightly "+release[1])
     else:
-      release = ["rapidsai", "23.12"]
+      release = ["rapidsai", "24.04"]
       print("Installing RAPIDS Stable "+release[1])
 else: # Pascal GPU Installation options (Not currently supported)
   release =  ["rapidsai", "23.12"]
