@@ -26,8 +26,8 @@ except:
   )
 gpu_name = pynvml.nvmlDeviceGetName(pynvml.nvmlDeviceGetHandleByIndex(0))
 
-LATEST_RAPIDS_VERSION = "25.08"
-NIGHTLY_RAPIDS_VERSION = "25.10"
+LATEST_RAPIDS_VERSION = "25.10"
+NIGHTLY_RAPIDS_VERSION = "25.12"
 LEGACY_RAPIDS_VERSION = "25.06"
 COLAB_RAPIDS_VERSION = "25.06"
 
