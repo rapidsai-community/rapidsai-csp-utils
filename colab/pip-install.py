@@ -26,9 +26,9 @@ except:
   )
 gpu_name = pynvml.nvmlDeviceGetName(pynvml.nvmlDeviceGetHandleByIndex(0))
 
-LATEST_RAPIDS_VERSION = "25.10"
-NIGHTLY_RAPIDS_VERSION = "25.12"
-LEGACY_RAPIDS_VERSION = "25.08"
+LATEST_RAPIDS_VERSION = "25.12"
+NIGHTLY_RAPIDS_VERSION = "26.02"
+LEGACY_RAPIDS_VERSION = "25.10"
 COLAB_RAPIDS_VERSION = "25.10"
 CUSPATIAL_RAPIDS_VERSION = "25.04" # WARNING, this courtesy version is unsupported and can break at any time!  Please use the RAPIDS 25.04 docker container on a GPU instance, like brev.nvidia.com, if this starts to fail
 
