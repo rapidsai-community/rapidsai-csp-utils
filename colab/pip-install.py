@@ -44,7 +44,7 @@ if(len(sys.argv)>=2):
       stdout=subprocess.PIPE)
   elif(sys.argv[1] == "nightlies"):
     print(f"Installing RAPIDS {NIGHTLY_RAPIDS_VERSION}.*")
-    output = subprocess.Popen([f'pip install "cudf-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cuml-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cugraph-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cuxfilter-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cucim-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "pylibraft-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a" "raft-dask-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "nx-cugraph-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" aiohttp --extra-index-url=https://pypi.anaconda.org/rapidsai-wheels-nightly/simple'], shell=True, stderr=subprocess.STDOUT,
+    output = subprocess.Popen([f'pip install --force-reinstall "cudf-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cuml-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cugraph-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cuxfilter-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cucim-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "pylibraft-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a" "raft-dask-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "nx-cugraph-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" aiohttp --extra-index-url=https://pypi.anaconda.org/rapidsai-wheels-nightly/simple'], shell=True, stderr=subprocess.STDOUT,
       stdout=subprocess.PIPE)
   elif(sys.argv[1] == "cuspatial"):
     rapids_version = CUSPATIAL_RAPIDS_VERSION
