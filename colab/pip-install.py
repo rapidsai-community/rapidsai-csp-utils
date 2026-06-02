@@ -49,7 +49,7 @@ if(len(sys.argv)>=2):
   elif(sys.argv[1] == "cuspatial"):
     rapids_version = CUSPATIAL_RAPIDS_VERSION
     print("Attempting to install RAPIDS cuSpatial compatible " + rapids_version + " libraries.  This is an unsupported version")
-    output = subprocess.Popen([f"pip install cudf-cu13=={rapids_version}.* cuml-cu13=={rapids_version}.* cugraph-cu13=={rapids_version}.* cuspatial-cu13=={rapids_version}.* cuxfilter-cu13=={rapids_version}.* cucim-cu13=={rapids_version}.* pylibraft-cu13=={rapids_version}.* raft-dask-cu13=={rapids_version}.* nx-cugraph-cu13=={rapids_version}.* cudf-polars-cu13=={rapids_version}.* cuvs-cu13=={rapids_version}.* aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT,
+    output = subprocess.Popen([f"pip install cudf-cu12=={rapids_version}.* cuml-cu12=={rapids_version}.* cugraph-cu12=={rapids_version}.* cuspatial-cu12=={rapids_version}.* cuxfilter-cu12=={rapids_version}.* cucim-cu12=={rapids_version}.* pylibraft-cu12=={rapids_version}.* raft-dask-cu12=={rapids_version}.* nx-cugraph-cu12=={rapids_version}.* cudf-polars-cu12=={rapids_version}.* cuvs-cu12=={rapids_version}.* aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT,
       stdout=subprocess.PIPE)
   else:
     rapids_version = COLAB_RAPIDS_VERSION
