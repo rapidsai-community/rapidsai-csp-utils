@@ -29,9 +29,9 @@ except:
   )
 gpu_name = pynvml.nvmlDeviceGetName(pynvml.nvmlDeviceGetHandleByIndex(0))
 
-LATEST_RAPIDS_VERSION = "26.06"
-NIGHTLY_RAPIDS_VERSION = "26.08"
-LEGACY_RAPIDS_VERSION = "26.04"
+LATEST_RAPIDS_VERSION = "26.08"
+NIGHTLY_RAPIDS_VERSION = "26.10"
+LEGACY_RAPIDS_VERSION = "26.06"
 COLAB_RAPIDS_VERSION = "26.02"
 CUSPATIAL_RAPIDS_VERSION = "25.04" # WARNING, this courtesy version is unsupported and can break at any time!  Please use the RAPIDS 25.04 docker container on a GPU instance, like brev.nvidia.com, if this starts to fail
 
@@ -43,16 +43,16 @@ if(len(sys.argv)>=2):
       stdout=subprocess.PIPE)
   elif(sys.argv[1] == "latest"):
     print(f"Installing RAPIDS Stable {LATEST_RAPIDS_VERSION}.*")
-    output = subprocess.Popen([f"pip install cudf-cu12=={LATEST_RAPIDS_VERSION}.* cuml-cu12=={LATEST_RAPIDS_VERSION}.* cugraph-cu12=={LATEST_RAPIDS_VERSION}.* cuxfilter-cu12=={LATEST_RAPIDS_VERSION}.* cucim-cu12=={LATEST_RAPIDS_VERSION}.* pylibraft-cu12=={LATEST_RAPIDS_VERSION}.* raft-dask-cu12=={LATEST_RAPIDS_VERSION}.* nx-cugraph-cu12=={LATEST_RAPIDS_VERSION}.* cudf-polars-cu12=={LATEST_RAPIDS_VERSION}.* cuvs-cu12=={LATEST_RAPIDS_VERSION}.* aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT,
+    output = subprocess.Popen([f"pip install cudf-cu12=={LATEST_RAPIDS_VERSION}.* cuml-cu12=={LATEST_RAPIDS_VERSION}.* cugraph-cu12=={LATEST_RAPIDS_VERSION}.* cucim-cu12=={LATEST_RAPIDS_VERSION}.* pylibraft-cu12=={LATEST_RAPIDS_VERSION}.* raft-dask-cu12=={LATEST_RAPIDS_VERSION}.* nx-cugraph-cu12=={LATEST_RAPIDS_VERSION}.* cudf-polars-cu12=={LATEST_RAPIDS_VERSION}.* cuvs-cu12=={LATEST_RAPIDS_VERSION}.* aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT,
       stdout=subprocess.PIPE)
   elif(sys.argv[1] in ["nightly", "nightlies"]):
     print(f"Installing RAPIDS {NIGHTLY_RAPIDS_VERSION}.*")
-    output = subprocess.Popen([f'pip install "cudf-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cuml-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cugraph-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cuxfilter-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cucim-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "pylibraft-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a" "raft-dask-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "nx-cugraph-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cudf-polars-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cuvs-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" aiohttp --extra-index-url=https://pypi.anaconda.org/rapidsai-wheels-nightly/simple'], shell=True, stderr=subprocess.STDOUT,
+    output = subprocess.Popen([f'pip install "cudf-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cuml-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cugraph-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cucim-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "pylibraft-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a" "raft-dask-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "nx-cugraph-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cudf-polars-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" "cuvs-cu12=={NIGHTLY_RAPIDS_VERSION}.*,>=0.0.0a0" aiohttp --extra-index-url=https://pypi.anaconda.org/rapidsai-wheels-nightly/simple'], shell=True, stderr=subprocess.STDOUT,
       stdout=subprocess.PIPE)
   elif(sys.argv[1] == "cuspatial"):
     rapids_version = CUSPATIAL_RAPIDS_VERSION
     print("Attempting to install RAPIDS cuSpatial compatible " + rapids_version + " libraries.  This is an unsupported version")
-    output = subprocess.Popen([f"pip install cudf-cu12=={rapids_version}.* cuml-cu12=={rapids_version}.* cugraph-cu12=={rapids_version}.* cuspatial-cu12=={rapids_version}.* cuxfilter-cu12=={rapids_version}.* cucim-cu12=={rapids_version}.* pylibraft-cu12=={rapids_version}.* raft-dask-cu12=={rapids_version}.* nx-cugraph-cu12=={rapids_version}.* cudf-polars-cu12=={rapids_version}.* cuvs-cu12=={rapids_version}.* aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT,
+    output = subprocess.Popen([f"pip install cudf-cu12=={rapids_version}.* cuml-cu12=={rapids_version}.* cugraph-cu12=={rapids_version}.* cuspatial-cu12=={rapids_version}.* cucim-cu12=={rapids_version}.* pylibraft-cu12=={rapids_version}.* raft-dask-cu12=={rapids_version}.* nx-cugraph-cu12=={rapids_version}.* cudf-polars-cu12=={rapids_version}.* cuvs-cu12=={rapids_version}.* aiohttp --extra-index-url=https://pypi.nvidia.com"], shell=True, stderr=subprocess.STDOUT,
       stdout=subprocess.PIPE)
   else:
     rapids_version = COLAB_RAPIDS_VERSION
